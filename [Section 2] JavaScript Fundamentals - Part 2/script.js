@@ -348,6 +348,7 @@ console.log(harry.age);
 console.log(harry.getSummary());
 
 // arrays are actually also objects, they are just a special kind of object. and so they have functions, or in other words they have methods that we can use to manipulate them like push, pop, shift and unshift and many more. used built in methods on arrays. the arrays are actually also objects, that's why they can have methods as well.
+*/
 
 // <46. Iteration: The for Loop>
 // control structures: if/else statement, loops
@@ -363,11 +364,10 @@ console.log(harry.getSummary());
 // console.log('Lifting weights repetition 10 🏋️');
 
 //for loop keeps running while condition is TRUE
-for (let rep = 1; rep <= 10; rep = rep++) {
+for (let rep = 1; rep <= 10; rep++) {
     console.log(`Lifting weights repetition ${rep} 🏋️`);
 }
 // loop statement 1. initial value of a counter, counter is the value that will start here at number 1 and go all the way to number 10 2. logical condition that is evaluated before each iteration of the loop, if the condition is true, then the next loop iteration will run. But as soon as this condition is false, then the loop stops and so no more ode will then be executed. So bascially, the loop will keep running while this condition stays true. 3. increasing the counter
-*/
 
 // <47. Looping Arrays, Breaking and Continuing>
 // for loops:  to loop through arrays
@@ -376,7 +376,8 @@ const harry = [
     'Potter',
     2037 - 1980,
     'Auror',
-    ['Ron', 'Hermione', 'Ginny']
+    ['Ron', 'Hermione', 'Ginny'],
+    true
 ];
 const types = [];
 
@@ -397,7 +398,7 @@ for (let i = 0; i < harry.length; i++) {
 
 console.log(types);
 
-const years = (1991, 2007, 1969, 2020);
+const years = [1991, 2007, 1969, 2020];
 const ages = [];
 
 for (let i = 0; i < years.length; i++) {
@@ -408,14 +409,14 @@ console.log(ages);
 // continue and break
 console.log('--- ONLY STRINGS ---');
 for (let i = 0; i < harry.length; i++) {
-    if (typeof jonas[i] !== 'string') continue;
+    if (typeof harry[i] !== 'string') continue;
 
     console.log(harry[i], typeof harry[i]);
 }
 
 console.log('--- BREAK WITH NUMBER ---');
 for (let i = 0; i < harry.length; i++) {
-    if (typeof jonas[i] !== 'number') break;
+    if (typeof harry[i] === 'number') break;
 
     console.log(harry[i], typeof harry[i]);
 }

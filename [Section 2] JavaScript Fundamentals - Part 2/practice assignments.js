@@ -11,8 +11,6 @@ const descPortugal = describeCountry('Portugal', 10, 'Lisbon');
 const descGermany = describeCountry('Germany', 83, 'Berlin');
 const descFinland = describeCountry('Finland', 6, 'Helsinki');
 console.log(descPortugal, descGermany, descFinland);
-*/
-
 
 // Function Declarations vs. Expressions 
 
@@ -29,8 +27,6 @@ const percROK1 = percentageOfWorld1(51.74);
 const percUSA1 = percentageOfWorld1(332);
 console.log(percPortugal1, percROK1, percUSA1);
 
-
-/*
 // Arrow Functions
 const percentageOfWorld3 = population => (population / 7900) * 100;
 const percPortugal3 = percentageOfWorld3(10);
@@ -79,7 +75,6 @@ if (!neighbours.includes('Germany')) {
 
 neighbours[neighbours.indexOf('Russia')] = 'Russian Federation';
 console.log(neighbours);
-*/
 
 // Introduction to Objects
 const myCountry = {
@@ -122,5 +117,25 @@ myCountry.describe();
 myCountry.checkIsland();
 
 console.log(myCountry);
+*/
 
+// Iteration: The for Loop
+for (let voter = 1; voter <= 50; voter++) {
+    console.log(`Voter number ${voter} is currently voting 🗳️`);
+}
+
+// Looping Arrays, Breaking and Continuing
+const populations = [10, 51.74, 332, 83];
+const percentages2 = [];
+
+function percentageOfWorld1(population) {
+    return (population / 7900) * 100;
+}
+
+for (let i = 0; i < populations.length; i++) {
+    const perc = percentageOfWorld1(populations[i]);
+    percentages2.push(perc);
+}
+
+console.log(percentages2);
 
