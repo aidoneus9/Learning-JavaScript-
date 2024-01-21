@@ -269,7 +269,7 @@ const harry = {
 console.log(harry);
 
 console.log(harry.lastName);
-console.log(harry['lastName']); // []안에는 any expression e.g) operator / something that produces a value 
+console.log(harry['lastName']); // []안에는 any expression e.g) operator / something that produces a value
 
 const nameKey = 'Name';
 console.log(harry['first' + nameKey]);
@@ -299,7 +299,6 @@ console.log(harry);
 // Challenge
 // "Harry has 3 friends, and his best friend is called Ron"
 console.log(`${harry.firstName} has ${harry.friends.length} friends, and his best friend is called ${harry.friends[0]}`); // dot length is just a property that is available on all a race
-*/
 
 // <44. Object Methods>
 // function은 value, object에 function add 가능
@@ -313,12 +312,12 @@ const harry = {
 
     // calcAge: function (birthYear) {
     //     return 2037 - birthYear;
-    // } // function value, any function that is attached to an object is called a method, method is actually also a property it just happens to be a property that holds a function value   
+    // } // function value, any function that is attached to an object is called a method, method is actually also a property it just happens to be a property that holds a function value
 
     // calcAge: function () {
     //     // console.log(this);
     //     return 2037 - this.birthYear;
-    // } // the this keyword or the this variable is basically equal to the object on which the method is called, it is equal to the object calling the method // this points to harry now 
+    // } // the this keyword or the this variable is basically equal to the object on which the method is called, it is equal to the object calling the method // this points to harry now
 
     calcAge: function () {
         this.age = 2037 - this.birthYear;
@@ -337,7 +336,7 @@ const harry = {
 // }
 
 // harry.calcAge(1980);
-console.log(harry.calcAge()); // the object that is calling the calcAge method here is harry 
+console.log(harry.calcAge()); // the object that is calling the calcAge method here is harry
 // console.log(harry['calcAge'](1980));
 
 console.log(harry.age);
@@ -348,7 +347,87 @@ console.log(harry.age);
 // "Harry is a 57-year old Auror, and he has a driver's license"
 console.log(harry.getSummary());
 
-// arrays are actually also objects, they are just a special kind of object. and so they have functions, or in other words they have methods that we can use to manipulate them like push, pop, shift and unshift and many more. used built in methods on a race. the race are actually also objects, that's why they can have methods as well.
+// arrays are actually also objects, they are just a special kind of object. and so they have functions, or in other words they have methods that we can use to manipulate them like push, pop, shift and unshift and many more. used built in methods on arrays. the arrays are actually also objects, that's why they can have methods as well.
+
+// <46. Iteration: The for Loop>
+// control structures: if/else statement, loops
+// console.log('Lifting weights repetition 1 🏋️');
+// console.log('Lifting weights repetition 2 🏋️');
+// console.log('Lifting weights repetition 3 🏋️');
+// console.log('Lifting weights repetition 4 🏋️');
+// console.log('Lifting weights repetition 5 🏋️');
+// console.log('Lifting weights repetition 6 🏋️');
+// console.log('Lifting weights repetition 7 🏋️');
+// console.log('Lifting weights repetition 8 🏋️');
+// console.log('Lifting weights repetition 9 🏋️');
+// console.log('Lifting weights repetition 10 🏋️');
+
+//for loop keeps running while condition is TRUE
+for (let rep = 1; rep <= 10; rep = rep++) {
+    console.log(`Lifting weights repetition ${rep} 🏋️`);
+}
+// loop statement 1. initial value of a counter, counter is the value that will start here at number 1 and go all the way to number 10 2. logical condition that is evaluated before each iteration of the loop, if the condition is true, then the next loop iteration will run. But as soon as this condition is false, then the loop stops and so no more ode will then be executed. So bascially, the loop will keep running while this condition stays true. 3. increasing the counter
+*/
+
+// <47. Looping Arrays, Breaking and Continuing>
+// for loops:  to loop through arrays
+const harry = [
+    'Harry',
+    'Potter',
+    2037 - 1980,
+    'Auror',
+    ['Ron', 'Hermione', 'Ginny']
+];
+const types = [];
+
+// console.log(harry[0]);
+// console.log(harry[1]);
+// ...
+// console.log(harry[4]);
+// harry[5] does NOT exist
+
+for (let i = 0; i < harry.length; i++) {
+    //Reading from harry array 
+    console.log(harry[i], typeof harry[i]);
+
+    // Filling types array
+    // types[i] = typeof harry[i];
+    types.push(typeof harry[i]);
+}
+
+console.log(types);
+
+const years = (1991, 2007, 1969, 2020);
+const ages = [];
+
+for (let i = 0; i < years.length; i++) {
+    ages.push(2037 - years[i]);
+}
+console.log(ages);
+
+// continue and break
+console.log('--- ONLY STRINGS ---');
+for (let i = 0; i < harry.length; i++) {
+    if (typeof jonas[i] !== 'string') continue;
+
+    console.log(harry[i], typeof harry[i]);
+}
+
+console.log('--- BREAK WITH NUMBER ---');
+for (let i = 0; i < harry.length; i++) {
+    if (typeof jonas[i] !== 'number') break;
+
+    console.log(harry[i], typeof harry[i]);
+}
+
+
+
+
+
+
+
+
+
 
 
 
