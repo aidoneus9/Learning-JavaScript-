@@ -348,7 +348,6 @@ console.log(harry.age);
 console.log(harry.getSummary());
 
 // arrays are actually also objects, they are just a special kind of object. and so they have functions, or in other words they have methods that we can use to manipulate them like push, pop, shift and unshift and many more. used built in methods on arrays. the arrays are actually also objects, that's why they can have methods as well.
-*/
 
 // <46. Iteration: The for Loop>
 // control structures: if/else statement, loops
@@ -421,26 +420,55 @@ for (let i = 0; i < harry.length; i++) {
     console.log(harry[i], typeof harry[i]);
 }
 
+// <48. Looping Backwards and Loops in Loops>
+// Looping backwards
+const harry = [
+    'Harry',
+    'Potter',
+    2037 - 1980,
+    'Auror',
+    ['Ron', 'Hermione', 'Ginny'],
+    true
+];
 
+// 0, 1, ..., 4
+// 4, 3, ..., 0
 
+for (let i = harry.length - 1; i >= 0; i--) {
+    console.log(i, harry[i]);
+} // counter, condition, counter update
 
+// Loops in loops
+for (let exercise = 1; exercise < 4; exercise++) {
+    console.log(`-------- Starting exercise ${exercise}`);
 
+    for (let rep = 1; rep < 6; rep++) {
+        console.log(`Exercise ${exercise}: Lifting weight repetition ${rep} 🏋️`) // inner loop
+    }
+} // outer loop
+*/
 
+// <49. The while Loop>
 
+// for (let rep = 1; rep <= 10; rep++) {
+//     console.log(`Lifting weights repetition ${rep} 🏋️`);
+// }
 
+let rep = 1;
+while (rep <= 10) {
+    // console.log(`WHILE: Lifting weights repetition ${rep} 🏋️`);
+    rep++;
+}
+// while loop is more versatile than the for loop it does not really need a counter all the while loop really needs is the condition which needs to stay true for it to keep running and that condition can be any condition, it doesn't have to be related to any counter at all, without a number that is increasing 
 
+let dice = Math.trunc(Math.random() * 6) + 1;
 
-
-
-
-
-
-
-
-
-
-
-
+while (dice !== 6) {
+    console.log(`You rolled a ${dice}`);
+    dice = Math.trunc(Math.random() * 6) + 1;
+    if (dice === 6) console.log('Loop is about to end...🎲');
+}
+// the while loop does really not have to depend on any counter variable. so whenever you do need a loop without a counter, whenever you do not know beforehand how many iterations the loop will have
 
 
 
