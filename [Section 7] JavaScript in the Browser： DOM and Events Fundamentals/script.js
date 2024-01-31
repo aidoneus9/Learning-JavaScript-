@@ -28,11 +28,20 @@ document.querySelector('.check').addEventListener('click', function () {
   console.log(guess, typeof guess); // usually whenever we get something from the user interface, for example, from an input field, it usually always is a string
 
   // usually, the first scenario is always to assume that there is actually no input, and then we need to respond to that somehow
-
+  // When there is no input
   if (!guess) {
     document.querySelector('.message').textContent = '⛔ No number!';
+
+    // When player wins
   } else if (guess === secretNumber) {
     document.querySelector('.message').textContent = '🎉 Correct Number!';
+
+    document.querySelector('body').style.backgroundColor = '#60b347'; // string
+    // it's just the body element so there is no Dot because that's for classes
+
+    document.querySelector('.number').style.width = '30rem';
+
+    // When guess is too high
   } else if (guess > secretNumber) {
     if (score > 1) {
       document.querySelector('.message').textContent = '📈 Too high!';
@@ -42,6 +51,8 @@ document.querySelector('.check').addEventListener('click', function () {
       document.querySelector('.message').textContent = '💥 You lost the game!';
       document.querySelector('.score').textContent = 0;
     }
+
+    // When guess is too low
   } else if (guess < secretNumber) {
     if (score > 1) {
       document.querySelector('.message').textContent = '📉 Too low!';
@@ -61,3 +72,6 @@ document.querySelector('.check').addEventListener('click', function () {
 // 2. (better way) actually create a variable for the score in the code and then update that variable so bascially to decrease that variable nad then display the value of that variable here in this score label / by doing that, we have our data also in the code and not just on the DOM. It's always good to keep a variable which actually holds the data in our code and not just rely on the DOM to hold our data.
 
 // <75. Manipulating CSS Styles>
+// DOM also includes CSS styles
+// 1. change the background of the entire page to a green color whenever the player guesses the right number so when the player wins the game
+// 2. also make this number wider then.
