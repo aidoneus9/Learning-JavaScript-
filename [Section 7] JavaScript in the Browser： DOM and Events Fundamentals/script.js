@@ -19,9 +19,8 @@ console.log(document.querySelector('.guess').value);
 
 // <73. Handling Click Events>
 
-const secretNumber = Math.trunc(Math.random() * 20) + 1; // Math is basically an object that JavaScript gives us, and on there, we have a lot of different methods, and random is one of them(gives us a number between 0 and 1)
+let secretNumber = Math.trunc(Math.random() * 20) + 1; // Math is basically an object that JavaScript gives us, and on there, we have a lot of different methods, and random is one of them(gives us a number between 0 and 1)
 let score = 20; // this variable here can also be called a state variable because this score is part of the so-called application stae which is basically all the data that is relevant to the application
-document.querySelector('.number').textContent = secretNumber;
 
 document.querySelector('.check').addEventListener('click', function () {
   const guess = Number(document.querySelector('.guess').value);
@@ -35,6 +34,7 @@ document.querySelector('.check').addEventListener('click', function () {
     // When player wins
   } else if (guess === secretNumber) {
     document.querySelector('.message').textContent = '🎉 Correct Number!';
+    document.querySelector('.number').textContent = secretNumber;
 
     document.querySelector('body').style.backgroundColor = '#60b347'; // string
     // it's just the body element so there is no Dot because that's for classes
@@ -75,3 +75,21 @@ document.querySelector('.check').addEventListener('click', function () {
 // DOM also includes CSS styles
 // 1. change the background of the entire page to a green color whenever the player guesses the right number so when the player wins the game
 // 2. also make this number wider then.
+
+// <76. Coding Challenge #1>
+// Implement a game reset functionality, so that the player can make a new guess!
+
+document.querySelector('.again').addEventListener('click', function () {
+  score = 20;
+  secretNumber = Math.trunc(Math.random() * 20) + 1; // reassign
+
+  document.querySelector('.message').textContent = 'Start guessing...';
+  document.querySelector('.score').textContent = score;
+  document.querySelector('.number').textContent = '?';
+  document.querySelector('.guess').value = '';
+
+  document.querySelector('body').style.backgroundColor = '#222';
+  document.querySelector('.number').style.width = '15rem';
+});
+
+// <77. Implementing Highscores>
