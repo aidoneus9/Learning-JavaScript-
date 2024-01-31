@@ -21,6 +21,7 @@ console.log(document.querySelector('.guess').value);
 
 let secretNumber = Math.trunc(Math.random() * 20) + 1; // Math is basically an object that JavaScript gives us, and on there, we have a lot of different methods, and random is one of them(gives us a number between 0 and 1)
 let score = 20; // this variable here can also be called a state variable because this score is part of the so-called application stae which is basically all the data that is relevant to the application
+let highscore = 0; // this way, the first score is always gonna be the highest score, because it's always going to be greater than zero
 
 document.querySelector('.check').addEventListener('click', function () {
   const guess = Number(document.querySelector('.guess').value);
@@ -38,8 +39,12 @@ document.querySelector('.check').addEventListener('click', function () {
 
     document.querySelector('body').style.backgroundColor = '#60b347'; // string
     // it's just the body element so there is no Dot because that's for classes
-
     document.querySelector('.number').style.width = '30rem';
+
+    if (score > highscore) {
+      highscore = score;
+      document.querySelector('.highscore').textContent = highscore;
+    }
 
     // When guess is too high
   } else if (guess > secretNumber) {
