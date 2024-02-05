@@ -120,4 +120,4 @@ btnHold.addEventListener('click', function () {
 // <86. Resetting the Game>
 // change classes and manipulate the content
 btnNew.addEventListener('click', init);
-// init funciton, which again is really just a value, and so it's perfectly okay to pass this value into this other function. We DO NOT call this function here. It is JavaScript who will call the init function as soon as the user clicks on the new button.
+// init funciton, which again is really just a value, and so it's perfectly okay to pass this value into this other function. WE DO NOT CALL this function here. It is JavaScript who will call the init function as soon as the user clicks on the new button.
