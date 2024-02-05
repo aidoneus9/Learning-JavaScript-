@@ -17,16 +17,32 @@ const btnNew = document.querySelector('.btn--new');
 const btnRoll = document.querySelector('.btn--roll');
 const btnHold = document.querySelector('.btn--hold');
 
-// Starting conditions
-score0El.textContent = 0;
-score1El.textContent = 0;
-// here we are specifying numbers, not strings, but JavaScript will then automatically convert them to strings to actually display them on the page
-diceEl.classList.add('hidden');
+let scores, currentScore, activePlayer, playing;
 
-const scores = [0, 0];
-let currentScore = 0; // this cannot be inside of the function below because then it would be set to zero each time that we click the button, and so therefore it needs to be outside
-let activePlayer = 0;
-let playing = true;
+// Starting conditions
+const init = function () {
+  scores = [0, 0];
+  currentScore = 0; // this cannot be inside of the function below because then it would be set to zero each time that we click the button, and so therefore it needs to be outside
+  activePlayer = 0;
+  playing = true;
+
+  score0El.textContent = 0;
+  score1El.textContent = 0; // here we are specifying numbers, not strings, but JavaScript will then automatically convert them to strings to actually display them on the page
+  current0El.textContent = 0;
+  current1El.textContent = 0;
+
+  diceEl.classList.add('hidden');
+  player0El.classList.remove('player--winner');
+  player1El.classList.remove('player--winner');
+  player0El.classList.add('player--active');
+  // there is no need to remove it from player0, because player0 should be the active player in the beginning
+  player1El.classList.remove('player--active');
+};
+init();
+// these variables that I defined here, they're only available inside of this init function. These scores, this current score, this active play, and this playing, all of these variables, I declared them in here, inside of this function. And so because of that, they are not accessible outside of the function. So we say that they are scoped to this init function, because this is where I declared them. And so the solution is to declare these variables outside of any function but without any value. And so it's then in the init function where they will really be declared. And then, in the init funciton, we only reassign their values. So that's very different. So declaring a variable is not the same as assigning them a value. We only assign them a value, but they still live outside here, and that's why they are then accessible in every function everywhere.
+// When do we want this function here to be executed? We want it in 2 situations.
+// 1. whenever we load the page for the very first time
+// 2. when that button is clicked
 
 const switchPlayer = function () {
   document.getElementById(`current--${activePlayer}`).textContent = 0;
@@ -83,7 +99,7 @@ btnHold.addEventListener('click', function () {
     document.getElementById(`score--${activePlayer}`).textContent =
       scores[activePlayer];
     // 2. Check if player's score is >= 100
-    if (scores[activePlayer] >= 20) {
+    if (scores[activePlayer] >= 100) {
       // Finish the game
       playing = false;
       diceEl.classList.add('hidden');
@@ -100,3 +116,8 @@ btnHold.addEventListener('click', function () {
   }
 });
 // The easiest solution is to create a variable that hosts the state of the game, so if we are still playing or not. So this is gonna be a state variable, which kind of tells us the condition of a system. In this case the condition will be is the game playing or not. And so if the game is playing, then we can click these buttons and then everything will work as normally. But then as soon as the game is finished, we will say that the game is no longer playing and then we can no longer click on these buttons.
+
+// <86. Resetting the Game>
+// change classes and manipulate the content
+btnNew.addEventListener('click', init);
+// init funciton, which again is really just a value, and so it's perfectly okay to pass this value into this other function. We DO NOT call this function here. It is JavaScript who will call the init function as soon as the user clicks on the new button.
