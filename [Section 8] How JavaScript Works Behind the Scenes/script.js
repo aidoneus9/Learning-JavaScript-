@@ -58,3 +58,56 @@ calcAge(1991);
 // console.log(age);
 // And also remember that we said that the scope of a variable is the entire region of the code in which the variable is accessible. So for example, the scope of the age variable is all of this area here. So everywhere here, the age variable is accessible. So of course, in the calcAge function, where it was defined, and then also in all the child scopes, so all the inner scopes. But of course, age is not accessible outside of the calcAge scope. So let me demonstrate that here. So here, we will not be able to access the age variable, because the scope chain is a one way street. So only an inner scope can have access to the variables of its outer scope, but not the other way around. So now here we are in the outer scope, and we cannot have access to the variables of a child scope, which the scope of the calcAge function here surely is.
 // printAge(); // And the same goes for functions again. And so we cannot call the printAge function out here, for the same reason. So here in the global scope, we do not have access to any variables defined in any other scope.
+
+// <95. Hoisting and TDZ in Practice>
+
+// Variables
+console.log(me); // undefined: that's because variables declared with var are actually hoisted, but they are hoisted to the value of undefined.
+console.log(job); // Cannot access 'job' before initialization: the origin of this error is the fact that the job variable is still in the temporal dead zone here at this point. The temporal dead zone of a variable declared with a let or const, starts from the beginning of the current scope(script.js:64, in this case it's the global scope) until the point of the code where it is defined(script.js:69). And this means that at this point of course, the job variable is still in the temporal dead zone.
+console.log(year);
+
+var me = 'Jacqueline';
+let job = 'backend developer';
+
+// Functions
+
+console.log(addDecl(2, 3)); // 5
+console.log(addExpr(2, 3)); // Cannot access 'addExpr' before initialization: exactly the same error that we got before here with this let and const variables, and that's because this function here right now is simply a const variable, too. It means that it's now also in the temporal dead zone.
+console.log(addArrow(2, 3)); // 5
+
+function addDecl(a, b) {
+  return a + b;
+}
+
+const addExpr = function (a, b) {
+  return a + b;
+}; // We simply assigning a function value to this variable, and since this variable was defined with const, it is now in a temporal dead zone.
+
+const addArrow = (a, b) => a + b;
+
+// if we change these to var
+var addExpr = function (a, b) {
+  return a + b;
+}; // another error message: addExpr is not a function, any variables declared with var will be hoisted and set to undefined, and then here we are trying to call undefined basically. undefined(2, 3)
+var addArrow = (a, b) => a + b; // console.log(addArrow); undefined
+
+// Example
+console.log(numProducts); // undefined: falsy value
+if (!numProdcuts) deleteShoppingCart(); // All products deleted! So we get all products deleted even though numProducts is actually 10. It is because of hoisting.
+// numProducts variable is undefined(falsy value).
+
+var numProducts = 10;
+
+function deleteShoppingCart() {
+  console.log('All products deleted!');
+}
+
+var x = 1;
+let y = 2;
+const z = 3;
+// window object in the console (window is the global object of JavaScript in the browser)
+
+console.log(x === window.x); // true
+// variables declared with var will create a property on the global window object
+console.log(y === window.y); // false
+console.log(z === window.z); // false
