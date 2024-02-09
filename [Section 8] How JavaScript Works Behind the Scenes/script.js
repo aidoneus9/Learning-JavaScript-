@@ -111,3 +111,5 @@ console.log(x === window.x); // true
 // variables declared with var will create a property on the global window object
 console.log(y === window.y); // false
 console.log(z === window.z); // false
+
+// <97. The this Keyword in Practice>
