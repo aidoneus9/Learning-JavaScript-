@@ -2,7 +2,6 @@
 
 // <93. Scoping in Practice>
 
-/*
 function calcAge(birthYear) {
   const age = 2037 - birthYear;
   console.log(firstName); // this firstName variable is not actually in this scope. However, it is a global variable that we defined out here. And so therefore, through the scope chain, it's gonna be made available also inside of this scope
@@ -14,7 +13,6 @@ function calcAge(birthYear) {
 const firstName = 'Jacqueline'; // create a global variable
 calcAge(1997);
 // eventhough this variable here was actually defined after the calcAge function. But that's not a problem at all because the code in the function is only executed once it's actually called. And so that happens after the declaration of the first name variable. And so at this point in the code, the firstName variable is already in the global execution variable environment. So in the global scope, ready to be used.
-*/
 
 function calcAge(birthYear) {
   const age = 2037 - birthYear;
