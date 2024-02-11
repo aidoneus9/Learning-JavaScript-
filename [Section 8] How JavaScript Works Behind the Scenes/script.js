@@ -111,3 +111,16 @@ console.log(y === window.y); // false
 console.log(z === window.z); // false
 
 // <97. The this Keyword in Practice>
+console.log(this);
+
+const calcAge = function (birthYear) {
+  console.log(2037 - birthYear);
+  console.log(this);
+};
+calcAge(1991);
+
+const calcAgeArrow = birthYear => {
+  console.log(2037 - birthYear);
+  console.log(this);
+};
+calcAgeArrow(1980);
