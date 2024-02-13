@@ -133,3 +133,19 @@ const jacqueline = {
   },
 };
 jacqueline.calcAge(1997);
+
+const jacqueline = {
+  year: 1997,
+  calcAge: function () {
+    console.log(this);
+    console.log(2037 - this.year);
+  },
+};
+jacqueline.calcAge();
+
+const harry = {
+  year: 2037,
+};
+
+harry.calcAge = jacqueline.calcAge;
+harry.calcAge();
