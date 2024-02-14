@@ -1,5 +1,6 @@
 'use strict';
 
+/*
 // <93. Scoping in Practice>
 
 function calcAge(birthYear) {
@@ -109,43 +110,52 @@ console.log(x === window.x); // true
 // variables declared with var will create a property on the global window object
 console.log(y === window.y); // false
 console.log(z === window.z); // false
+*/
 
 // <97. The this Keyword in Practice>
 console.log(this);
+// we get that the this keyword in the global scope is simply the window object
 
+// Regular function
 const calcAge = function (birthYear) {
   console.log(2037 - birthYear);
-  console.log(this);
+  console.log(this); // undefined
+  // it is its own this keyword
 };
-calcAge(1991);
+calcAge(1997);
 
+// Arrow function
 const calcAgeArrow = birthYear => {
   console.log(2037 - birthYear);
-  console.log(this);
+  console.log(this); // window
+  // In this case, what is the lexcial, this keyword? So what is the this keyword in the parent's scope of this function? It is window because window is the this keyword here in the global scope(script.js:116)
+  // not the this keyword of this function(calcAgeArrow). It is simply the this keyword of the parent's scope and that happens to be the window object
 };
+
 calcAgeArrow(1980);
 
-const jacqueline = {
-  year: 1991,
-  calcAge: function () {
-    console.log(this);
-    console.log(2037 - this.year);
-  },
-};
-jacqueline.calcAge(1997);
-
+// inside of a method
 const jacqueline = {
   year: 1997,
   calcAge: function () {
-    console.log(this);
+    console.log(this); // the jacqueline object
     console.log(2037 - this.year);
   },
 };
 jacqueline.calcAge();
+// the reason that the this keyword will point to jacqueline in this case is because jacqueline was the object calling the method(not because we wrote the method inside the object)
 
-const harry = {
-  year: 2037,
+const matilda = {
+  year: 2017,
 };
 
-harry.calcAge = jacqueline.calcAge;
-harry.calcAge();
+// function is just a value
+matilda.calcAge = jacqueline.calcAge; // method borrowing, (do not call)
+matilda.calcAge(); // 20
+// The method call here, the this keyword does now actually point to Matilda. The this keyword always points to the object that is calling the method. So even though the method is written here inside of the jacqueline object, the this keyword will still point to Matilda, if it is Matilda who calls the method.
+
+// function is a value
+const f = jacqueline.calcAge;
+// copy the function into a new variable(do not call)
+f(); // undefined, error that it cannot read year of undefined(coming from script.js:143)
+// the f function is just a regular function call. It is not attached to any object. There is no owner of the f function anymore here at this point and therefore it is just a regular function call just like script.js:125
