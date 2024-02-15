@@ -110,7 +110,6 @@ console.log(x === window.x); // true
 // variables declared with var will create a property on the global window object
 console.log(y === window.y); // false
 console.log(z === window.z); // false
-*/
 
 // <97. The this Keyword in Practice>
 console.log(this);
@@ -159,3 +158,151 @@ const f = jacqueline.calcAge;
 // copy the function into a new variable(do not call)
 f(); // undefined, error that it cannot read year of undefined(coming from script.js:143)
 // the f function is just a regular function call. It is not attached to any object. There is no owner of the f function anymore here at this point and therefore it is just a regular function call just like script.js:125
+
+// <98. Regular Functions vs. Arrow Functions>
+const jacqueline = {
+  firstName: 'Jacqueline',
+  year: 1997,
+  calcAge: function () {
+    console.log(this); // the jacqueline object
+    console.log(2037 - this.year);
+  },
+
+  greet: () => console.log(`Hey ${this.firstName}`),
+}; // this is not a code block(not create its own scope), it is an object literal
+// use the this keyword from the global scope(= window object) and on the window obejct, there is no firstNanme
+jacqueline.greet(); // Hey undefined
+console.log(this.firstName); // undefined
+// when we try to access a property that doesn't exist on a certain object, we do not get an error, but simply undefined
+
+// cf. variables declared with var, actually create properties on the global object
+var firstName = 'Matilda';
+
+const jacqueline = {
+  firstName: 'Jacqueline',
+  year: 1997,
+  calcAge: function () {
+    console.log(this);
+    console.log(2037 - this.year);
+  },
+
+  greet: () => {
+    console.log(this);
+    console.log(`Hey ${this.firstName}`);
+  },
+};
+jacqueline.greet(); // Hey Matilda
+console.log(this.firstName); // Matilda
+
+// another reason not to use var
+// you should never ever use an arrow function as a method
+
+// var firstName = 'Matilda';
+
+const jacqueline = {
+  firstName: 'Jacqueline',
+  year: 1997,
+  calcAge: function () {
+    console.log(this);
+    console.log(2037 - this.year);
+  },
+
+  greet: function () {
+    console.log(this);
+    console.log(`Hey ${this.firstName}`);
+  },
+};
+jacqueline.greet(); // Hey Jacqueline
+console.log(this.firstName); // undefined
+
+const jacqueline = {
+  firstName: 'Jacqueline',
+  year: 1997,
+  calcAge: function () {
+    // console.log(this);
+    console.log(2037 - this.year);
+
+    const isMillenial = function () {
+      console.log(this); // undefined
+      console.log(this.year >= 1981 && this.year <= 1996);
+    };
+    isMillenial(); // It is a regular function call even though it happens inside of a method. And the rule says that inside a regular function call, the this keyword must be undefined.
+  },
+
+  greet: () => {
+    console.log(this);
+    console.log(`Hey ${this.firstName}`);
+  },
+};
+jacqueline.greet();
+jacqueline.calcAge();
+
+// Solution 1 (pre ES6)
+// use an extra variable (self or that)
+const jacqueline = {
+  firstName: 'Jacqueline',
+  year: 1997,
+  calcAge: function () {
+    // console.log(this);
+    console.log(2037 - this.year);
+
+    const self = this; // self or that
+    const isMillenial = function () {
+      console.log(self); // self is referenced here, but it's not in the scope, and so JavaScript goes up the scope chain into the parent scope, which is calcAge
+      console.log(self.year >= 1981 && self.year <= 1996);
+    };
+    isMillenial();
+  },
+
+  greet: () => {
+    console.log(this);
+    console.log(`Hey ${this.firstName}`);
+  },
+};
+jacqueline.greet();
+jacqueline.calcAge();
+*/
+
+// Solution 2
+// use an arrow function
+const jacqueline = {
+  firstName: 'Jacqueline',
+  year: 1997,
+  calcAge: function () {
+    // console.log(this);
+    console.log(2037 - this.year);
+
+    const isMillenial = () => {
+      console.log(this);
+      console.log(this.year >= 1981 && this.year <= 1996);
+    };
+    isMillenial();
+  },
+
+  greet: () => {
+    console.log(this);
+    console.log(`Hey ${this.firstName}`);
+  },
+};
+jacqueline.greet();
+jacqueline.calcAge();
+// This worked because this arrow function uses this keyword from its parent scope and in this case, in the parent scope, the this keyword is jacqueline. So an arrow function inherits the this keyword from the parent scope.
+
+// arguments keyword
+// just like the this keyword, the arguments keyword is only available in regular functions.
+
+const addExpr = function (a, b) {
+  console.log(arguments);
+  return a + b;
+};
+addExpr(2, 5);
+addExpr(2, 5, 8, 12); // This can be useful when we need a function to accept more parameters than we actually specified.
+// we can use them in the functions ex) we could use a loop, and then loop over this array and add all the numbers together
+
+var addArrow = (a, b) => a + b;
+
+var addArrow = (a, b) => {
+  console.log(arguments);
+  return a + b; // when we have more than one line of code, we need to explicitly return
+};
+addArrow(2, 5, 8); // error
