@@ -261,7 +261,6 @@ const jacqueline = {
 };
 jacqueline.greet();
 jacqueline.calcAge();
-*/
 
 // Solution 2
 // use an arrow function
@@ -306,3 +305,22 @@ var addArrow = (a, b) => {
   return a + b; // when we have more than one line of code, we need to explicitly return
 };
 addArrow(2, 5, 8); // error
+*/
+
+// <99. Primitives vs. Objects (Primitive vs. Reference Types)>
+// Primitives: numbers, strings, Boolean's, et cetera.
+
+let age = 30;
+let oldAge = age;
+age = 31;
+console.log(age); // 31
+console.log(oldAge); // 30
+
+const me = {
+  name: 'Jonas',
+  age: 30,
+};
+const friend = me;
+friend.age = 27;
+console.log('Friend', friend);
+console.log('Me', me);
