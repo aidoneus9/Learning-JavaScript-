@@ -305,7 +305,6 @@ var addArrow = (a, b) => {
   return a + b; // when we have more than one line of code, we need to explicitly return
 };
 addArrow(2, 5, 8); // error
-*/
 
 // <99. Primitives vs. Objects (Primitive vs. Reference Types)>
 // Primitives: numbers, strings, Boolean's, et cetera.
@@ -324,3 +323,62 @@ const friend = me;
 friend.age = 27;
 console.log('Friend', friend);
 console.log('Me', me);
+
+// <100. Primitives vs. Objects in Practice>
+// Primitive types
+let lastName = 'Williams';
+let oldLastName = lastName;
+lastName = 'Davis';
+console.log(lastName, oldLastName); // Davis Williams
+
+// Reference types
+const blake = {
+  firstName: 'Blake',
+  lastName: 'Lively',
+  age: 36,
+};
+const marriedBlake = blake;
+marriedBlake.lastName = 'Reynolds';
+console.log('Before marriage:', blake);
+console.log('After marriage:', marriedBlake);
+// const is supposed to be for constants. So for things that we cannot change. However, what actually needs to be constant is the value in the stack. And in the stack, the value only holds the reference, which we are not actually changing. The only thing that we are changing is the underlying object that is stored in the heap. And that is okay to change. That has nothing to do with const or let. That's only about the value in the stack, but if we change something in the heap, that has nothing to do with const or let.
+
+// What we can't do is to assign a completely different object to marriedBlake
+// marriedBlake = {}; // Uncaught TypeError
+// because this new object will be stored at a different position in memory, and therefore the reference to that position in memory will have to change in this variable. And therefore, that does not work because that is in the stack and so, since it is a constant, we cannot change that value in the stack. So we cannot change the value to a new memory address, and therefore, this does not work. If it was a let here, then we could do this, what we have here.
+// As a conclusion, completely changing the object, so, assigning a new object to it is completely different than simply changing a property.
+
+// What if we actually really wanted to copy the object so that we could then change one of them without changing the other?
+// Copying objects
+const blake2 = {
+  firstName: 'Blake',
+  lastName: 'Lively',
+  age: 36,
+};
+
+const blakeCopy = Object.assign({}, blake2);
+blakeCopy.lastName = 'Reynolds';
+console.log('Before marriage:', blake2);
+console.log('After marriage:', blakeCopy);
+// This object is indeed a real copy of the original. So all the properties were essentially copied from one object to the other. And so behind the scenes, what that means is that a new object was in fact created in the heap and blakeCopy is now pointing to that object. So it has a reference to that new object.
+*/
+// However, there is still a problem because using this technique of object.assign only works on the first level. If we have an object inside the object, then this inner object will actually still be the same. So, it will still point to the same place in memory. And that's why we say that this object.assign only creates a shallow copy and not a deep clone(A shallow copy will only copy the properties in the first level while a deep clone would copy everything).
+// An array is really just an object behind the scenes
+const blake2 = {
+  firstName: 'Blake',
+  lastName: 'Lively',
+  age: 36,
+  family: ['Lori', 'Jason', 'Robyn', 'Eric'],
+};
+
+const blakeCopy = Object.assign({}, blake2);
+blakeCopy.lastName = 'Reynolds';
+
+blakeCopy.family.push('Ryan');
+blakeCopy.family.push('James');
+blakeCopy.family.push('Inez');
+blakeCopy.family.push('Betty');
+
+console.log('Before marriage:', blake2);
+console.log('After marriage:', blakeCopy);
+// The family object is a deeply nested object and so therefore, object.assign did not really, behind the scenes, copy it to the new object. So in essence, both the objects, blake2 and blakeCopy have a property called family which points at the same object(the array) in the memory heap. So when we change the array in one of them, it's also gonna be changed in the other one.
