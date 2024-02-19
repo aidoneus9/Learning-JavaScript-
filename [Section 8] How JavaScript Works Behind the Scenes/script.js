@@ -1,6 +1,5 @@
 'use strict';
 
-/*
 // <93. Scoping in Practice>
 
 function calcAge(birthYear) {
@@ -361,7 +360,7 @@ blakeCopy.lastName = 'Reynolds';
 console.log('Before marriage:', blake2);
 console.log('After marriage:', blakeCopy);
 // This object is indeed a real copy of the original. So all the properties were essentially copied from one object to the other. And so behind the scenes, what that means is that a new object was in fact created in the heap and blakeCopy is now pointing to that object. So it has a reference to that new object.
-*/
+
 // However, there is still a problem because using this technique of object.assign only works on the first level. If we have an object inside the object, then this inner object will actually still be the same. So, it will still point to the same place in memory. And that's why we say that this object.assign only creates a shallow copy and not a deep clone(A shallow copy will only copy the properties in the first level while a deep clone would copy everything).
 // An array is really just an object behind the scenes
 const blake2 = {
