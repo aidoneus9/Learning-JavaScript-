@@ -8,22 +8,68 @@ const restaurant = {
   categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
   starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
   mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+  openingHours: {
+    thu: {
+      open: 12,
+      close: 22,
+    },
+    fri: {
+      open: 11,
+      close: 23,
+    },
+    sat: {
+      open: 0, // Open 24 hours
+      close: 24,
+    },
+  },
 
   order: function (starterIndex, mainIndex) {
     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
   },
+
+  // orderDelivery: function ({ starterIndex, mainIndex, time, address }) {
+  //   console.log(
+  //     `Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`
+  //   ); // Order received! Garlic Bread and Risotto will be delivered to 221B Baker Street at 22:30
+  // },
+
+  orderDelivery: function ({
+    starterIndex = 1,
+    mainIndex = 0,
+    time = '20:00',
+    address,
+  }) {
+    console.log(
+      `Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`
+    );
+  },
 };
+
+restaurant.orderDelivery({
+  time: '22:30',
+  address: '221B Baker Street',
+  mainIndex: 2,
+  starterIndex: 2,
+});
+
+restaurant.orderDelivery({
+  address: '221B Baker Street',
+  starterIndex: 1,
+}); // Order received! Bruschetta and Pizza will be delivered to 221B Baker Street at 20:00
 
 // Destructuring is an ES6 feature and it's basically a way of unpacking values from an array or an object into separate variables. So in other words, it is to break a complex data structure down into a smaller data structure like a variable. So for arrays we use destructuring to retrieve elements from the array and store them into variables in a very easy way.
 
+/*
 const arr = [2, 3, 4];
 const a = arr[0];
 const b = arr[1];
 const c = arr[2];
 
+
 const [x, y, z] = arr;
 console.log(x, y, z); // 2 3 4
 console.log(arr); // the original array is not affected
+*/
 
 // const [first, second] = restaurant.categories;
 // console.log(first, second); // Italian Pizzeria
@@ -66,29 +112,44 @@ console.log(i, j, k); // 2 5 6
 const [p = 1, q = 1, r = 1] = [8, 9];
 console.log(p, q, r); // 8 9 1
 
-/*
-const restaurant = {
-  name: 'Classico Italiano',
-  location: 'Via Angelo Tavanti 23, Firenze, Italy',
-  categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
-  starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
-  mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+// <105. Destructuring Objects>
+const { name, openingHours, categories } = restaurant;
+console.log(name, openingHours, categories);
 
-  openingHours: {
-    thu: {
-      open: 12,
-      close: 22,
-    },
-    fri: {
-      open: 11,
-      close: 23,
-    },
-    sat: {
-      open: 0, // Open 24 hours
-      close: 24,
-    },
-  },
-};
+// what if we wanted the variable names to be different from the property names?
+
+const {
+  name: restaurantName,
+  openingHours: hours,
+  categories: tags,
+} = restaurant;
+console.log(restaurantName, hours, tags);
+
+// Default Values
+// This is especially helpful when we do not have or data hard-coded like we have it here(script.js:5). In the real world, we usually get the data from somewhere else and then we might not always know how exactly the data looks like. And so then it's useful to set defaults like this.
+
+// const { menu, starterMenu: starters = [] } = restaurant;
+// console.log(menu); // undefined
+
+const { menu = [], starterMenu: starters = [] } = restaurant;
+console.log(menu, starters);
+
+// Mutating variables
+let a = 111;
+let b = 999;
+const obj = { a: 23, b: 7, c: 14 };
+// { a, b } = obj; // we cannot say const {a, b} because a and b are already declared up. We can also not do let, because that would create new variables and we already have them.
+// when we start a line with a curly brace like this, then JavaScript expects a code block and since we cannot assign anything to a code block, like we did here with the equal sign, then get this error, unexpected token with the equal there.
+({ a, b } = obj);
+console.log(a, b); // 23 7
+
+// Nested objects
+const {
+  fri: { open: o, close: c },
+} = openingHours;
+console.log(o, c); // 11 23
+
+/*
 // Data needed for a later exercise
 const flights =
   '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
