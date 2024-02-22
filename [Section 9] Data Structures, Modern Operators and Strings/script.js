@@ -149,6 +149,20 @@ const {
 } = openingHours;
 console.log(o, c); // 11 23
 
+// <106. The Spread Operator (...)
+// expand an array into all its elements
+// unpacking all the array elements at one
+
+const arr = [7, 8, 9];
+const badNewArr = [1, 2, arr[0], arr[1], arr[2]];
+console.log(badNewArr);
+
+const newArr = [1, 2, ...arr]; // (5) [1, 2, 7, 8, 9]
+// const newArr = [1, 2, arr]; // (3) [1, 2, Array(3)]
+console.log(newArr);
+// What the spread operator does is to basically take all the values out of this arr array, and then write them individually as if we wrote 7, 8, 9 here manually.
+// So what this means is that we can use the spread operator whenever we would otherwise write multiple values separated by commas.
+
 /*
 // Data needed for a later exercise
 const flights =
