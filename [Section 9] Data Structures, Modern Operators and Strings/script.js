@@ -69,7 +69,6 @@ const c = arr[2];
 const [x, y, z] = arr;
 console.log(x, y, z); // 2 3 4
 console.log(arr); // the original array is not affected
-*/
 
 // const [first, second] = restaurant.categories;
 // console.log(first, second); // Italian Pizzeria
@@ -148,6 +147,7 @@ const {
   fri: { open: o, close: c },
 } = openingHours;
 console.log(o, c); // 11 23
+*/
 
 // <106. The Spread Operator (...)
 // expand an array into all its elements
@@ -161,7 +161,37 @@ const newArr = [1, 2, ...arr]; // (5) [1, 2, 7, 8, 9]
 // const newArr = [1, 2, arr]; // (3) [1, 2, Array(3)]
 console.log(newArr);
 // What the spread operator does is to basically take all the values out of this arr array, and then write them individually as if we wrote 7, 8, 9 here manually.
-// So what this means is that we can use the spread operator whenever we would otherwise write multiple values separated by commas.
+// So what this means is that we can use the spread operator whenever we would otherwise write multiple values separated by commas. And that situation happens whenever we write an array literal like we did up here. So that's the first situation in which it's very useful to expand an array.
+
+// The second situation is when we pass arguments into functions.
+console.log(...newArr); // 1 2 7 8 9
+console.log(1, 2, 7, 8, 9);
+
+const newMenu = [...restaurant.mainMenu, 'Gnocchi'];
+console.log(newMenu);
+// You might have noticed that the spread operator is actually a bit similar to destructuring because it also helps us get elements out of arrays. The big difference is that the spread operator takes all the elements from the array and it also doesn't create new variables. As a consequence, we can only use it in places where we would otherwise write values separated by commas.
+
+// Two important use cases which is to create shallow copies of arrays and to merge two arrays together.
+
+// Copy array
+const mainMenuCopy = [...restaurant.mainMenu];
+// a little bit similar to Object.assign
+
+// Join 2 arrays
+const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+console.log(menu);
+
+// Iterables: arrays, strings, maps, sets, NOT objects
+const str = 'Dong Kyoung';
+const letters = [...str, ' ', 'S.'];
+console.log(letters);
+console.log(...str);
+
+// What we can't do is to use this to build a string using a template literal.
+console.log(`${...str} Lee` ); // Unexpected token 
+// So again, multiple values separated by a comma are usually only expected when we pass arguments into a function, or when we build a new array.  
+
+// Let's now actually write our own function that accepts multiple arguments and then use the spread operator to actually pass those arguments. 
 
 /*
 // Data needed for a later exercise
