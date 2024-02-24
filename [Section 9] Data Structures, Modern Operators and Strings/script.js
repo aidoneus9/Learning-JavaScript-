@@ -43,6 +43,12 @@ const restaurant = {
       `Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`
     );
   },
+
+  orderPasta: function (ing1, ing2, ing3) {
+    console.log(
+      `Here is your delicious pasta with ${ing1}, ${ing2} and ${ing3}`
+    );
+  },
 };
 
 restaurant.orderDelivery({
@@ -188,10 +194,18 @@ console.log(letters);
 console.log(...str);
 
 // What we can't do is to use this to build a string using a template literal.
-console.log(`${...str} Lee` ); // Unexpected token 
-// So again, multiple values separated by a comma are usually only expected when we pass arguments into a function, or when we build a new array.  
+// console.log(`${...str} Lee` ); // Unexpected token
+// So again, multiple values separated by a comma are usually only expected when we pass arguments into a function, or when we build a new array.
 
-// Let's now actually write our own function that accepts multiple arguments and then use the spread operator to actually pass those arguments. 
+// Let's now actually write our own function that accepts multiple arguments and then use the spread operator to actually pass those arguments.
+// add another method(orderPasta)
+const ingredients = [
+  prompt("Let's make pasta! Ingredient 1?"),
+  prompt("Let's make pasta! Ingredient 2?"),
+  prompt("Let's make pasta! Ingredient 3?"),
+];
+// 'Let\'s make pasta! Ingredient 1?'
+console.log(ingredients);
 
 /*
 // Data needed for a later exercise
