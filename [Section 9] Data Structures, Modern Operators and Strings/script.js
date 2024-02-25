@@ -197,15 +197,29 @@ console.log(...str);
 // console.log(`${...str} Lee` ); // Unexpected token
 // So again, multiple values separated by a comma are usually only expected when we pass arguments into a function, or when we build a new array.
 
+// Real-world example
 // Let's now actually write our own function that accepts multiple arguments and then use the spread operator to actually pass those arguments.
 // add another method(orderPasta)
 const ingredients = [
-  prompt("Let's make pasta! Ingredient 1?"),
-  prompt("Let's make pasta! Ingredient 2?"),
-  prompt("Let's make pasta! Ingredient 3?"),
+  // prompt("Let's make pasta! Ingredient 1?"),
+  // prompt('Ingredient 2?'),
+  // prompt('Ingredient 3?'),
 ];
 // 'Let\'s make pasta! Ingredient 1?'
 console.log(ingredients);
+
+restaurant.orderPasta(ingredients[0], ingredients[1], ingredients[2]);
+restaurant.orderPasta(...ingredients);
+
+// Objects
+const newRestaurant = { foundedIn: 1998, ...restaurant, founder: 'Giuseppe' };
+console.log(newRestaurant);
+
+const restaurantCopy = { ...restaurant };
+restaurantCopy.name = 'Ristorante Roma';
+console.log(restaurantCopy.name);
+console.log(restaurant);
+// now you will see that they are different. So the copy has the name of Ristorante Roma, and the old one has Classico Italiano, which means that, indeed, we did make a copy of the original restaurant. Because otherwise, changing one object would then also change the other one.
 
 /*
 // Data needed for a later exercise
