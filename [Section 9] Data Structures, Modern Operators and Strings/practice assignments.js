@@ -283,3 +283,17 @@ printBookInfo({
   author: 'Robert Sedgewick',
   // year: '2011',
 });
+
+// The Spread Operator
+const bookAuthors = [...books[0].author, ...books[1].author];
+console.log(bookAuthors);
+
+// const bookAuthor = (books[0].author, books[1].author);
+// console.log(bookAuthor);
+// ['Harold Abelson', 'Gerald Jay Sussman', 'Julie Sussman (Contributor)']
+
+function spellWorld(word) {
+  console.log(...word);
+}
+
+spellWorld('JavaScript');
