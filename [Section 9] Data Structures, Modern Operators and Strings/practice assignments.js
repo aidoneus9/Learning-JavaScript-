@@ -288,6 +288,7 @@ printBookInfo({
 const bookAuthors = [...books[0].author, ...books[1].author];
 console.log(bookAuthors);
 
+// Why? 🤔
 // const bookAuthor = (books[0].author, books[1].author);
 // console.log(bookAuthor);
 // ['Harold Abelson', 'Gerald Jay Sussman', 'Julie Sussman (Contributor)']
