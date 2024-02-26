@@ -221,6 +221,17 @@ console.log(restaurantCopy.name);
 console.log(restaurant);
 // now you will see that they are different. So the copy has the name of Ristorante Roma, and the old one has Classico Italiano, which means that, indeed, we did make a copy of the original restaurant. Because otherwise, changing one object would then also change the other one.
 
+// <107. Rest Pattern and Parameters>
+// The rest pattern uses the exact same syntax however, to collect multiple elements and condense them into an array.
+// The spread operator is to unpack an array while rest is to pack elements into an array
+
+// SPREAD, because on RIGHT side of =
+const arr = [1, 2, ...[3, 4]];
+
+// REST, because on LEFT side of =
+const [a, b, ...others] = [1, 2, 3, 4, 5];
+console.log(a, b, others);
+
 /*
 // Data needed for a later exercise
 const flights =
