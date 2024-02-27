@@ -153,7 +153,6 @@ const {
   fri: { open: o, close: c },
 } = openingHours;
 console.log(o, c); // 11 23
-*/
 
 // <106. The Spread Operator (...)
 // expand an array into all its elements
@@ -220,10 +219,13 @@ restaurantCopy.name = 'Ristorante Roma';
 console.log(restaurantCopy.name);
 console.log(restaurant);
 // now you will see that they are different. So the copy has the name of Ristorante Roma, and the old one has Classico Italiano, which means that, indeed, we did make a copy of the original restaurant. Because otherwise, changing one object would then also change the other one.
+*/
 
 // <107. Rest Pattern and Parameters>
 // The rest pattern uses the exact same syntax however, to collect multiple elements and condense them into an array.
 // The spread operator is to unpack an array while rest is to pack elements into an array
+
+// 1) Destructuring
 
 // SPREAD, because on RIGHT side of =
 const arr = [1, 2, ...[3, 4]];
@@ -231,7 +233,26 @@ const arr = [1, 2, ...[3, 4]];
 // REST, because on LEFT side of =
 const [a, b, ...others] = [1, 2, 3, 4, 5];
 console.log(a, b, others);
+// the rest pattern basically collects the elements that are unused in the destructuring assignment
 
+const [pizza, , risotto, ...otherFood] = [
+  ...restaurant.mainMenu,
+  ...restaurant.starterMenu,
+];
+console.log(pizza, risotto, otherFood);
+// it does not include any skipped elements and so for that reason, the rest pattern always must be the last in the destructuring assignment
+
+// Objects
+const { sat, ...weekdays } = restaurant.openingHours;
+console.log(weekdays);
+
+// 2) Functions
+const add = function (...numbers) {
+  console.log(numbers);
+};
+add(2, 3);
+add(5, 3, 7, 2);
+add(8, 2, 5, 3, 2, 1, 4);
 /*
 // Data needed for a later exercise
 const flights =
