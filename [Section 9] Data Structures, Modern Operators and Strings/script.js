@@ -49,6 +49,11 @@ const restaurant = {
       `Here is your delicious pasta with ${ing1}, ${ing2} and ${ing3}`
     );
   },
+
+  orderPizza: function (mainIngredient, ...otherIngredients) {
+    console.log(mainIngredient);
+    console.log(otherIngredients);
+  },
 };
 
 restaurant.orderDelivery({
@@ -248,11 +253,28 @@ console.log(weekdays);
 
 // 2) Functions
 const add = function (...numbers) {
-  console.log(numbers);
+  // console.log(numbers);
+  let sum = 0;
+  for (let i = 0; i < numbers.length; i++) sum += numbers[i];
+  console.log(sum);
 };
-add(2, 3);
-add(5, 3, 7, 2);
-add(8, 2, 5, 3, 2, 1, 4);
+add(2, 3); // [2, 3]
+add(5, 3, 7, 2); // [5, 3, 7, 2]
+add(8, 2, 5, 3, 2, 1, 4); // [8, 2, 5, 3, 2, 1, 4]
+
+const x = [23, 5, 7];
+add(...x);
+// so this is a good example of showing you how spread is the opposite of rest because after these numbers being spread here they will then enter this add function here and then they will immediately be collected into this numbers array by the rest parameters
+
+// Let's add yet another method(orderPizza)
+restaurant.orderPizza('mushrooms', 'onion', 'olives', 'spinach');
+// the first argument was stored into the main argument and then all the remaining arguments that were passed in were simply stored into this array by the rest parameter of syntax
+restaurant.orderPizza('mushrooms');
+// we still get an empty array that we can work with if we want
+
+// The spread operator is used where we would otherwise write values, separated by a comma. On the other hand, the rest pattern is basically used where we would otherwise write variable names separated by commas.
+
+// <108. Short Circuiting (&& and ||)
 /*
 // Data needed for a later exercise
 const flights =
