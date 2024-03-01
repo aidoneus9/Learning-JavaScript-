@@ -275,6 +275,22 @@ restaurant.orderPizza('mushrooms');
 // The spread operator is used where we would otherwise write values, separated by a comma. On the other hand, the rest pattern is basically used where we would otherwise write variable names separated by commas.
 
 // <108. Short Circuiting (&& and ||)
+// Use ANY data type, return ANY data type, short-circuiting(short-circuit evalution)
+console.log(3 || 'Jonas'); // 3
+// So in fact, here we used two values that are not Booleans and it then returned a value that was not a Boolean. And now about short-circuiting, in the case of the OR operator, short circuiting means that if the first value is a truthy value, it will immediately return that first value. So again, if the first operand is truthy here in the OR operator, then the other operand will not even be evaluated. So JavaScript will not even take a look at it.
+console.log('' || 'Jonas'); // Jonas
+// this here is a falsy value and so then, the second operand will actually also be evaluated, and that's Jonas and it will then be returned. So here we see again that the result of the OR operator doesn't have to be a Boolean. It will simply return the truthy value here.
+console.log(true || 0); // true
+// This first value here is truthy, and in fact, it's even true, and so therefore that will simply be the result of the operator.
+console.log(false || 0); // 0
+console.log(undefined || null); // null
+// undefined is a falsy value, and so we then go to the second operand, so there is no short-circuiting, and so that's then the one that's gonna be returned. And that happens even though null is also a falsy value.
+console.log(undefined || 0 || '' || 'Hello' || 23 || null); // Hello
+// Remember, in the OR operation, the result is true, if at least one operand is true. So if the first operand is already true, then JavaScript doesn't even have to look at the other values because the result of the expression will already be true anyway. And so it will short circuit and then simply return that first result.
+
+const guests1 = restaurant.numGuests ? restaurant.numGuests : 10;
+// we want to check if it exists, and then the result should be actually restaurant.numGuests, but if it doesn't exist, then we want to set a default value of 10
+console.log(guests1); // 10
 /*
 // Data needed for a later exercise
 const flights =

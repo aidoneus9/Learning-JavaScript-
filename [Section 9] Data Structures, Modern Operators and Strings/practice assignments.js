@@ -298,3 +298,6 @@ function spellWorld(word) {
 }
 
 spellWorld('JavaScript');
+
+// Rest Pattern and Parameters
+// 4.1
