@@ -275,6 +275,8 @@ restaurant.orderPizza('mushrooms');
 // The spread operator is used where we would otherwise write values, separated by a comma. On the other hand, the rest pattern is basically used where we would otherwise write variable names separated by commas.
 
 // <108. Short Circuiting (&& and ||)
+
+console.log('---- OR ----');
 // Use ANY data type, return ANY data type, short-circuiting(short-circuit evalution)
 console.log(3 || 'Jonas'); // 3
 // So in fact, here we used two values that are not Booleans and it then returned a value that was not a Boolean. And now about short-circuiting, in the case of the OR operator, short circuiting means that if the first value is a truthy value, it will immediately return that first value. So again, if the first operand is truthy here in the OR operator, then the other operand will not even be evaluated. So JavaScript will not even take a look at it.
@@ -288,9 +290,32 @@ console.log(undefined || null); // null
 console.log(undefined || 0 || '' || 'Hello' || 23 || null); // Hello
 // Remember, in the OR operation, the result is true, if at least one operand is true. So if the first operand is already true, then JavaScript doesn't even have to look at the other values because the result of the expression will already be true anyway. And so it will short circuit and then simply return that first result.
 
+// restaurant.numGuests = 23;
+// restaurant.numGuests= 0; both of these solutions will not work when the number of guests is 0. They are both 10. However, 0 is the real number of guests(solution in next lecture).
 const guests1 = restaurant.numGuests ? restaurant.numGuests : 10;
 // we want to check if it exists, and then the result should be actually restaurant.numGuests, but if it doesn't exist, then we want to set a default value of 10
 console.log(guests1); // 10
+
+const guests2 = restaurant.numGuests || 10;
+console.log(guests2); // 10
+
+console.log('---- AND ----');
+console.log(0 && 'Jonas'); // 0
+// The AND operator short circuits when the first value is falsy. And then immediately returns that falsy value without even evaluating the second operand.
+console.log(7 && 'Jonas'); // Jonas
+// So when it is truthy, it means that the evaluation continues and then simply the last value is returned.
+
+console.log('Hello' && 23 && null && 'Jonas'); // null
+
+// Practical example
+if (restaurant.orderPizza) {
+  restaurant.orderPizza('mushrooms', 'spinach');
+}
+
+restaurant.orderPizza && restaurant.orderPizza('mushrooms', 'spinach');
+// It's perfectly fine to use the second operand to call a function. We can put anything here. It doesn't just have to be a single value.
+
+// SUMMARIZE: The OR operator will return the first truthy value of all the operands, or simply the last value if all of them are falsy. On the other hand, the AND operator will return the first falsy value or the last value if all of them are truthy. And as for practical applications, we can use the OR operator to set default values, and we can use the AND operator to execute code in the second operand if the first one is true.
 /*
 // Data needed for a later exercise
 const flights =
