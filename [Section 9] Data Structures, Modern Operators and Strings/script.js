@@ -316,6 +316,15 @@ restaurant.orderPizza && restaurant.orderPizza('mushrooms', 'spinach');
 // It's perfectly fine to use the second operand to call a function. We can put anything here. It doesn't just have to be a single value.
 
 // SUMMARIZE: The OR operator will return the first truthy value of all the operands, or simply the last value if all of them are falsy. On the other hand, the AND operator will return the first falsy value or the last value if all of them are truthy. And as for practical applications, we can use the OR operator to set default values, and we can use the AND operator to execute code in the second operand if the first one is true.
+
+// <109. The Nullish Coalescing Operator (??)>
+restaurant.numGuests = 0;
+const guests = restaurant.numGuests || 10;
+console.log(guests); // 10
+
+// Nullish: null and undefined (NOT 0 or '')
+const guestCorrect = restaurant.numGuests ?? 10;
+console.log(guestCorrect); // 0
 /*
 // Data needed for a later exercise
 const flights =
