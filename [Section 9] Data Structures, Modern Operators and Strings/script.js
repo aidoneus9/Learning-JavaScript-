@@ -357,6 +357,22 @@ rest2.owner &&= '<ANONYMOUS>';
 
 console.log(rest1);
 console.log(rest2);
+
+// <112. Looping Arrays: The for-of Loop
+const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+
+for (const item of menu) console.log(item);
+// we can still use the continue and break keywords
+
+// for (const item of menu.entries()) {
+//   console.log(`${item[0] + 1}: ${item[1]}`);
+// }
+
+for (const [i, el] of menu.entries()) {
+  console.log(`${i + 1}: ${el}`);
+}
+
+// <113. Enhanced Object Literals>
 /*
 // Data needed for a later exercise
 const flights =
