@@ -1,7 +1,7 @@
 'use strict';
 
 // <103. Destructuring Arrays>
-
+/*
 const restaurant = {
   name: 'Classico Italiano',
   location: 'Via Angelo Tavanti 23, Firenze, Italy',
@@ -70,7 +70,6 @@ restaurant.orderDelivery({
 
 // Destructuring is an ES6 feature and it's basically a way of unpacking values from an array or an object into separate variables. So in other words, it is to break a complex data structure down into a smaller data structure like a variable. So for arrays we use destructuring to retrieve elements from the array and store them into variables in a very easy way.
 
-/*
 const arr = [2, 3, 4];
 const a = arr[0];
 const b = arr[1];
@@ -224,7 +223,6 @@ restaurantCopy.name = 'Ristorante Roma';
 console.log(restaurantCopy.name);
 console.log(restaurant);
 // now you will see that they are different. So the copy has the name of Ristorante Roma, and the old one has Classico Italiano, which means that, indeed, we did make a copy of the original restaurant. Because otherwise, changing one object would then also change the other one.
-*/
 
 // <107. Rest Pattern and Parameters>
 // The rest pattern uses the exact same syntax however, to collect multiple elements and condense them into an array.
@@ -371,6 +369,7 @@ for (const item of menu) console.log(item);
 for (const [i, el] of menu.entries()) {
   console.log(`${i + 1}: ${el}`);
 }
+*/
 
 // <113. Enhanced Object Literals>
 const weekdays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
@@ -383,10 +382,14 @@ const openingHours = {
     open: 11,
     close: 23,
   },
-  [`day-${2 + 4}`]: {
+  [weekdays[5]]: {
     open: 0, // Open 24 hours
     close: 24,
   },
+  // [`day-${2 + 4}`]: {
+  //   open: 0, // Open 24 hours
+  //   close: 24,
+  // },
 };
 
 const restaurant = {
@@ -432,6 +435,68 @@ const restaurant = {
     console.log(otherIngredients);
   },
 };
+
+// <114. Optional Chaining (?.)
+if (restaurant.openingHours && restaurant.openingHours.mon)
+  console.log(restaurant.openingHours.mon.open);
+
+// console.log(restaurant.openingHours.mon.open); // Uncaught TypeError
+
+// WITH optional chaining
+console.log(restaurant.openingHours.mon?.open); // undefined
+// So only if the property that is before the question mark(so only if monday) exists, then this open property will be read from there. But if not, then immediately undefined will be returned. And exists here actually means the nullish concept that we already talked before. So, a property exists if it's not null and not undefined. So if it's zero or the empty string, then it still exists of course.
+console.log(restaurant.openingHours?.mon?.open);
+
+// Example
+const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+
+for (const day of days) {
+  // console.log(day);
+  const open = restaurant.openingHours[day]?.open ?? 'closed';
+  // remember if want to use a variable name as the property name, we need to use the brackets notation
+  console.log(`On ${day}, we open at ${open}`);
+}
+
+// Methods
+console.log(restaurant.order?.(0, 1) ?? 'Method does not exist');
+console.log(restaurant.orderRisotto?.(0, 1) ?? 'Method does not exist');
+// This optional chaining operator will check if orderRisotto actually exists. And if it doesn't, well then it will immediately return undefined. And so all of this then returns undefined. And so here in the nullish coalescing operator, we immediately go to that second operant. And that's the result of this whole operation.
+
+// Arrays
+const users = [{ name: 'Dong Kyoung', email: 'decaf@dongkyoung.io' }];
+
+console.log(users[0]?.name ?? 'User array empty');
+
+if (users.length > 0) console.log(users[0].name);
+else console.log('User array empty');
+
+// <115. Looping Objects: Object Keys, Values, and Entries>
+// So we learned about the for of loop to loop over a race, which remember is an iterable, but we can also loop over objects, which are not iterables, but in an indirect way. Now we have different options here, depending on what exactly we want to loop over. So do we want to loop over the objects, property names over the values or both together. And let's start by simply looping over property names.
+// And so remember they are also called keys. Now, ultimately we will still have to use the for of loop to loop over the array, but again, we're going to do that in an indirect way. So we're not actually looping over the object itself. Instead, we're going to loop over, an array.
+
+// Property NAMES
+const properties = Object.keys(openingHours);
+console.log(properties);
+
+let openStr = `We are open on ${properties.length} days: `;
+for (const day of properties) {
+  openStr += `${day}, `;
+}
+console.log(openStr);
+
+// Property VALUES
+const values = Object.values(openingHours);
+console.log(values);
+
+// Entire object
+const entries = Object.entries(openingHours);
+// so this distinction between the array and the object is important as we loop over the entire object
+console.log(entries);
+
+// [key, value]
+for (const [day, { open, close }] of entries) {
+  console.log(`On ${day} we open at ${open} and close at ${close}`);
+}
 /*
 // Data needed for a later exercise
 const flights =
