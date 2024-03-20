@@ -133,6 +133,9 @@ console.log(average);
 // 3.
 for (const [team, odd] of Object.entries(game.odds)) {
   console.log(team, odd);
+  const teamStr = team === 'x' ? 'draw' : `victory ${game[team]}`;
+  // ${game[team]} 🤔
+  console.log(`Odd of ${teamStr} ${odd}`);
 }
 // notice again, how in the array we use the entries method to get the entries of the array(js:122), but in the object we have to use Object.entries and then pass into the function, the object that we are interested in(js:134).
 
