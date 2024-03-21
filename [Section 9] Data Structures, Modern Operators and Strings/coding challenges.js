@@ -140,6 +140,12 @@ for (const [team, odd] of Object.entries(game.odds)) {
 // notice again, how in the array we use the entries method to get the entries of the array(js:122), but in the object we have to use Object.entries and then pass into the function, the object that we are interested in(js:134).
 
 // BONUS
+// So the solution is to loop over the array, and add the array elements as object properties, and then increase the count as we encounter a new occurence of a certain element
+const scorers = {};
+for (const player of game.scored) {
+  scorers[player] ? scorers[player]++ : (scorers[player] = 1);
+}
+
 let scores = {};
 for (const value of Object.values(game.scored)) {
   if (scores[value]) {
