@@ -530,8 +530,31 @@ console.log(ordersSet);
 
 // 4. retrieve values out of a set
 // in sets, there are no indexes
-console.log(ordersSet[0]); // undefined
+// console.log(ordersSet[0]); // undefined
+// in fact, there is no way of getting values out of a set. And if we think about this, then it makes sense. So there's really no need for getting data out of a set. That's because if all values are unique, and if their order does not matter, then there is no point of retrieving values out of a set. All we need to know is whether a certain value is in the set or not. And that's why we have the has method. 그럴거면 그냥 array를 써라.
 
+// 5. delete all of the elements
+// ordersSet.clear();
+// console.log(ordersSet); // Set(0) {}
+
+// 6. loop over a set(sets are also iterables)
+for (const order of ordersSet) console.log(order);
+
+// Example
+const staff = ['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter'];
+// const staffUnique = new Set(staff);
+// because an array is already an iterable
+// console.log(staffUnique); // (3) {'Waiter', 'Chef', 'Manager'}
+const staffUnique = [...new Set(staff)];
+// the spread operator works on all iterables. So that includes sets.
+console.log(staffUnique);
+// (3) ['Waiter', 'Chef', 'Manager']
+
+console.log(
+  new Set(['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter']).size
+); // 3
+
+console.log(new Set('dongkyounglee').size); // 9
 /*
 // Data needed for a later exercise
 const flights =

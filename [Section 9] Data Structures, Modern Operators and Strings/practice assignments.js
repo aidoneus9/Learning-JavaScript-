@@ -424,3 +424,6 @@ const entries2 = Object.entries(books[0].thirdParty.goodreads);
 // 11.4
 console.log(entries);
 console.log(entries2);
+
+// Sets
+// 12.1
