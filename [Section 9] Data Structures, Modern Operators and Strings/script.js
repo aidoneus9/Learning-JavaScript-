@@ -369,7 +369,6 @@ for (const item of menu) console.log(item);
 for (const [i, el] of menu.entries()) {
   console.log(`${i + 1}: ${el}`);
 }
-*/
 
 // <113. Enhanced Object Literals>
 const weekdays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
@@ -497,6 +496,42 @@ console.log(entries);
 for (const [day, { open, close }] of entries) {
   console.log(`On ${day} we open at ${open} and close at ${close}`);
 }
+*/
+
+// <117. Sets>
+const ordersSet = new Set([
+  'Pasta',
+  'Pizza',
+  'Pizza',
+  'Risotto',
+  'Pasta',
+  'Pizza',
+]);
+// and then here (), we need to pass in an iterable and the most common iterable here is an array
+// but of course, they could be different data types in here. So set can of course hold mixed data types. That's not a problem at all.
+console.log(ordersSet);
+
+// keep in mind that strings are also iterables
+console.log(new Set('Jonas')); // Set(5) {'J', 'o' ,'n', 'a', 's'}
+console.log(new Set()); // Set(0) {}
+
+// 1. get the size of a set
+console.log(ordersSet.size); // 3
+
+// 2. check if a certain element is in a set
+console.log(ordersSet.has('Pizza')); // true
+console.log(ordersSet.has('Bread')); // false
+
+// 3. add new elements to a set & delete elements
+ordersSet.add('Garlic Bread');
+ordersSet.add('Garlic Bread');
+ordersSet.delete('Risotto');
+console.log(ordersSet);
+
+// 4. retrieve values out of a set
+// in sets, there are no indexes
+console.log(ordersSet[0]); // undefined
+
 /*
 // Data needed for a later exercise
 const flights =
