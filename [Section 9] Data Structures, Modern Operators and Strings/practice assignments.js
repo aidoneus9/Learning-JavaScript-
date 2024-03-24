@@ -429,17 +429,23 @@ console.log(entries2);
 // 12.1
 const allKeywords = [];
 
-// const allKeywords = [...new Set(all)];
-// console.log(allKeywords);
-
 for (const book of books) {
   allKeywords.push(...book.keywords);
 }
 
 // 12.2
-// const uniqueKeywords = new Set(allKeywords);
+const uniqueKeywords = new Set(allKeywords);
 
 // 12.3
-const uniqueKeywords = new Set(allKeywords, 'coding', 'science');
+uniqueKeywords.add('coding');
+uniqueKeywords.add('science');
 
-console.log(uniqueKeywords);
+// 12.4
+uniqueKeywords.delete('business');
+
+// 12.5
+const uniqueKeywordsArr = [...uniqueKeywords];
+// [...new Set(array)]
+
+// 12.6
+uniqueKeywords.clear();
