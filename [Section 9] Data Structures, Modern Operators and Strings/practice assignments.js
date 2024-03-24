@@ -427,3 +427,19 @@ console.log(entries2);
 
 // Sets
 // 12.1
+const allKeywords = [];
+
+// const allKeywords = [...new Set(all)];
+// console.log(allKeywords);
+
+for (const book of books) {
+  allKeywords.push(...book.keywords);
+}
+
+// 12.2
+// const uniqueKeywords = new Set(allKeywords);
+
+// 12.3
+const uniqueKeywords = new Set(allKeywords, 'coding', 'science');
+
+console.log(uniqueKeywords);
