@@ -558,6 +558,52 @@ console.log(new Set('dongkyounglee').size); // 9
 
 // <118. Maps: Fundamentals>
 // a map is a data structure that we can use to map values to keys. So, just like an object data is stored in key value pairs in maps. Now, the big difference between objects and maps is that in maps, the keys can have any type and this can be huge. So, in objects, the keys are basically always strings. But in maps, we can have any type of key. It could even be objects, or arrays, or other maps.
+
+const rest = new Map();
+rest.set('name', 'Classico Italiano');
+rest.set(1, 'Firenze, Italy');
+rest.set(2, 'Lisbon, Portugal');
+// calling the set method like this does not only update the map that it's called on, but also returns the map.
+console.log(rest.set(2, 'Lisbon, Portugal'));
+
+rest
+  .set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
+  .set('open', 11)
+  .set('close', 23)
+  .set(true, 'We are open :D')
+  .set(false, 'We are closed :(');
+
+// get: in order to read data from a map we use the get method & all we need to do is to pass in the name of the key
+console.log(rest.get('name'));
+console.log(rest.get(true));
+console.log(rest.get(1));
+
+const time = 8;
+console.log(rest.get(time > rest.get('open') && time < rest.get('close'))); // We are open :D
+
+// has: we can also check if a map contains a certain key
+console.log(rest.has('categories')); // true
+
+// delete: we can also delete elements from the map
+rest.delete(2);
+console.log(rest);
+
+// size
+console.log(rest.size); // 7
+
+// clear: remove all the elements from the map
+// rest.clear();
+// console.log(rest); // Map(0) {}
+// console.log(rest.size); // 0
+
+// use arrays or objects as map keys
+rest.set([1, 2], 'Test');
+console.log(rest);
+console.log(rest.size);
+
+console.log(rest.get([1, 2])); // undefined
+// But, given what we learned in the previous section about how JavaScript works behind the scenes, especially, Primitives vs. Objects, do you think that this will now retrieve Test?
+// undefined; the reason for that, is that these two arrays(600 & 604) are actually not the same object. Even though we wrote them in the same way and so, they have the same elements, they are not the same object in the heap. And, the key here is exactly this object(600). This object in memory(600), and not this one(604). And so, this cannot work.
 /*
 // Data needed for a later exercise
 const flights =
