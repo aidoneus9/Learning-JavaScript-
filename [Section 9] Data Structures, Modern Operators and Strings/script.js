@@ -604,6 +604,13 @@ console.log(rest.size);
 console.log(rest.get([1, 2])); // undefined
 // But, given what we learned in the previous section about how JavaScript works behind the scenes, especially, Primitives vs. Objects, do you think that this will now retrieve Test?
 // undefined; the reason for that, is that these two arrays(600 & 604) are actually not the same object. Even though we wrote them in the same way and so, they have the same elements, they are not the same object in the heap. And, the key here is exactly this object(600). This object in memory(600), and not this one(604). And so, this cannot work.
+
+const arr = [1, 2];
+rest.set(arr, 'Test');
+console.log(rest);
+console.log(rest.size);
+
+console.log(rest.get(arr));
 /*
 // Data needed for a later exercise
 const flights =
