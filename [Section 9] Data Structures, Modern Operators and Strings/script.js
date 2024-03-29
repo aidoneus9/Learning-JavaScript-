@@ -369,6 +369,7 @@ for (const item of menu) console.log(item);
 for (const [i, el] of menu.entries()) {
   console.log(`${i + 1}: ${el}`);
 }
+*/
 
 // <113. Enhanced Object Literals>
 const weekdays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
@@ -390,7 +391,7 @@ const openingHours = {
   //   close: 24,
   // },
 };
-
+/*
 const restaurant = {
   name: 'Classico Italiano',
   location: 'Via Angelo Tavanti 23, Firenze, Italy',
@@ -597,20 +598,61 @@ console.log(rest.size); // 7
 // console.log(rest.size); // 0
 
 // use arrays or objects as map keys
-rest.set([1, 2], 'Test');
-console.log(rest);
-console.log(rest.size);
+// rest.set([1, 2], 'Test');
+// console.log(rest);
+// console.log(rest.size);
 
-console.log(rest.get([1, 2])); // undefined
+// console.log(rest.get([1, 2])); // undefined
 // But, given what we learned in the previous section about how JavaScript works behind the scenes, especially, Primitives vs. Objects, do you think that this will now retrieve Test?
 // undefined; the reason for that, is that these two arrays(600 & 604) are actually not the same object. Even though we wrote them in the same way and so, they have the same elements, they are not the same object in the heap. And, the key here is exactly this object(600). This object in memory(600), and not this one(604). And so, this cannot work.
 
 const arr = [1, 2];
 rest.set(arr, 'Test');
+rest.set(document.querySelector('h1'), 'Heading');
 console.log(rest);
 console.log(rest.size);
 
 console.log(rest.get(arr));
+
+// <119. Maps: Iteration>
+// when there are a lot of values to set
+const question = new Map([
+  ['question', 'What is the best programming language in the world?'],
+  [1, 'C'],
+  [2, 'Java'],
+  [3, 'JavaScript'],
+  ['correct', 3],
+  [true, 'Correct 🎉'],
+  [false, 'Try again!'],
+]);
+console.log(question);
+// This is exactly the same array structure that is returned from calling Object.entries
+
+// Convert object to map
+console.log(Object.entries(openingHours));
+// and so what this means is that there is an easy way to convert from objects to maps
+const hoursMap = new Map(Object.entries(openingHours));
+console.log(hoursMap);
+
+// Iteration
+// Quiz app
+console.log(question.get('question'));
+for (const [key, value] of question) {
+  if (typeof key === 'number') console.log(`Answer ${key}: ${value}`);
+}
+
+// const answer = Number(prompt('Your answer'));
+const answer = 3;
+console.log(question.get(question.get('correct') === answer));
+
+// Convert map to array
+console.log([...question]);
+// console.log([...question.entries()]);
+console.log([...question.keys()]);
+console.log([...question.values()]);
+
+// <120. Summary: Which Data Structure to Use?>
+
 /*
 // Data needed for a later exercise
 const flights =
