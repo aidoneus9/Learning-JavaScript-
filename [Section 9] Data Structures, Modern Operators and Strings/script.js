@@ -651,8 +651,30 @@ console.log([...question]);
 console.log([...question.keys()]);
 console.log([...question.values()]);
 
-// <120. Summary: Which Data Structure to Use?>
+// <122. Working With Strings - Part 1>
+const airline = 'TAP Air Portugal';
+const plane = 'A320';
 
+console.log(plane[0]);
+console.log(plane[1]);
+console.log(plane[2]);
+console.log('B737'[0]);
+
+console.log(airline.length);
+console.log('B737'.length);
+
+console.log(airline.indexOf('r')); // 6
+console.log(airline.lastIndexOf('r')); // 10
+console.log(airline.indexOf('Portugal')); // 8
+
+console.log(airline.slice(4)); // Air Portugal
+// substring because it's just a part of the original string. Now this does not change the underlying string because it's actually impossible to mutate strings. They are primitives. So if we wanted to use this string now we would have to store it first into some variable or some data structure. Okay, so this method here and all the other ones that we're gonna talk about always return a new string. That's why we can then lock that result to the console like this.
+console.log(airline.slice(4, 7)); // Air
+
+// extracting the first word
+console.log(airline.slice(0, airline.indexOf(' '))); // TAP
+// extracting the last word
+console.log(airline.slice(airline.lastIndexOf(' ') + 1)); // Portugal
 /*
 // Data needed for a later exercise
 const flights =
