@@ -675,6 +675,28 @@ console.log(airline.slice(4, 7)); // Air
 console.log(airline.slice(0, airline.indexOf(' '))); // TAP
 // extracting the last word
 console.log(airline.slice(airline.lastIndexOf(' ') + 1)); // Portugal
+
+// extracting from the end
+console.log(airline.slice(-2)); // al
+console.log(airline.slice(1, -1)); // AP Air Portuga
+
+const checkMiddleSeat = function (seat) {
+  // B and E are middle seats
+  const s = seat.slice(-1);
+  if (s === 'B' || s === 'E') console.log('You got the middle seat 😬');
+  else console.log('You got lucky 😎');
+};
+
+checkMiddleSeat('11B');
+checkMiddleSeat('23C');
+checkMiddleSeat('3E');
+
+// Whenever we call a method on a string, JavaScript will automatically behind the scenes convert that string primitive to a string object with the same content. And then it's on that object where the methods are called. And this process is called boxing because it basically takes our string and puts it into a box which is the object.
+
+console.log(new String('Jonas'));
+console.log(typeof new String('Jonas')); // object
+// And so this conversion here is what JavaScript does behind the scenes whenever we call a method on a string. And then when the operation is done the object is converted back to a regular string primitive. And in fact all string methods return primitives. Even if called on a string object.
+console.log(typeof new String('Jonas').slice(1)); // string
 /*
 // Data needed for a later exercise
 const flights =
