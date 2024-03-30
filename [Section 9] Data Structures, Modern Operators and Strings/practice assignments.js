@@ -510,3 +510,39 @@ function isContributor(author) {
 
 isContributor('Julie Sussman (Contributor)');
 isContributor('Robert Sedgewick');
+
+// Working with Strings - Part 2
+// 16.1
+function normalizeAuthorName(author) {
+  const s = author.toLowerCase().trim();
+  console.log(s); // julie sussman (contributor)
+  const e = s.indexOf(' '); // 5
+  const f = s.lastIndexOf(' '); // 13
+  const d =
+    s[0].toUpperCase() +
+    s.slice(1, e + 1) +
+    s[e + 1].toUpperCase() +
+    s.slice(e + 2, f);
+  console.log(d);
+}
+
+normalizeAuthorName('  JuliE sussMan (Contributor)');
+// ⚠️ (Contributor)가 없는 경우에는 안 됨.
+
+// The Answer
+// function normalizeAuthorName(author) {
+//   author = author.trim();
+//   const firstName = author.slice(0, author.indexOf(' '));
+
+//   let lastName = '';
+//   if (author.indexOf(' ') === author.lastIndexOf(' ')) {
+//     lastName = author.slice(author.indexOf(' ') + 1, author.length);
+//   } else {
+//     lastName = author.slice(author.indexOf(' ') + 1, author.lastIndexOf(' '));
+//   }
+
+//   const capitalizedFirstName = firstName[0].toUpperCase() + firstName.slice(1).toLowerCase();
+//   const capitalizedLastName = lastName[0].toUpperCase() + lastName.slice(1).toLowerCase();
+
+//   return capitalizedFirstName + ' ' + capitalizedLastName;
+// }
