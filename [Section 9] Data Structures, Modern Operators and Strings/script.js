@@ -652,6 +652,7 @@ console.log([...question.keys()]);
 console.log([...question.values()]);
 
 // <122. Working With Strings - Part 1>
+/*
 const airline = 'TAP Air Portugal';
 const plane = 'A320';
 
@@ -697,6 +698,73 @@ console.log(new String('Jonas'));
 console.log(typeof new String('Jonas')); // object
 // And so this conversion here is what JavaScript does behind the scenes whenever we call a method on a string. And then when the operation is done the object is converted back to a regular string primitive. And in fact all string methods return primitives. Even if called on a string object.
 console.log(typeof new String('Jonas').slice(1)); // string
+
+// <123. Working With Strings - Part 2>
+console.log(airline.toLowerCase()); // tap air portugal
+console.log(airline.toUpperCase()); // TAP AIR PORTUGAL
+console.log('Jonas'.toUpperCase()); // JONAS
+*/
+
+// Fix capitalization in name
+const passenger = 'jOnAS'; // Jonas
+const passengerLower = passenger.toLowerCase();
+const passengerCorrect =
+  passengerLower[0].toUpperCase() + passengerLower.slice(1);
+console.log(passengerCorrect);
+
+// ✍️ Of course, we could have done a function with this. So maybe if you have the time, you can do that. So just create a function which takes any passenger name and then returns the correct one. So with the fixed capitalization.
+
+// Comparing email
+const email = 'hello@jonas.io';
+const loginEmail = 'Hello@Jonas.Io \n';
+
+// const lowerEmail = loginEmail.toLowerCase();
+// const trimmedEmail = lowerEmail.trim();
+// console.log(trimmedEmail);
+
+const normalizedEmail = loginEmail.toLowerCase().trim();
+console.log(normalizedEmail);
+console.log(email === normalizedEmail);
+// ✍️ You could do this here in a separate function. So you could do a function for this behavior where you pass in to emails, one, which is the correct one, and one, which is the one to check. And then you could return either true or false from that.
+// 🖥️ By the way, here, since ES2019, there's also trim start and trim end, which as their names say, you can use to trim wide space only from the start of the string or only from the end.
+
+// replacing
+const priceGB = '288,97£';
+const priceUS = priceGB.replace('£', '$').replace(',', '.');
+console.log(priceUS);
+
+const announcement =
+  'All passengers come to boarding door 23, Boarding door 23!';
+// just like the other method that we studied, replace also creates a brand new string. It doesn't mutate the original one. So we need to log the actual result to the console.
+console.log(announcement.replace('door', 'gate')); // All passengers come to boarding gate 23, Boarding door❌ 23!
+console.log(announcement.replaceAll('door', 'gate')); // 지금은 안된다는데 나는 왜 되는...?
+// Regular expression
+console.log(announcement.replace(/door/g, 'gate')); // g stands for global
+
+// Booleans
+const plane = 'Airbus A320neo';
+console.log(plane.includes('A320')); // true
+console.log(plane.includes('Boeing')); // false
+console.log(plane.startsWith('Air')); // true
+
+if (plane.startsWith('Airbus') && plane.endsWith('neo')) {
+  console.log('Part of the NEW Airbus family ✈️');
+}
+
+// Practice exercise
+const checkBaggage = function (items) {
+  const baggage = items.toLowerCase();
+  if (baggage.includes('knife') || baggage.includes('gun')) {
+    console.log('You are NOT allowed on board');
+  } else {
+    console.log('Welcome aboard!');
+  }
+};
+checkBaggage('I have a laptop, some Food and a pocket Knife');
+checkBaggage('Socks and camera');
+checkBaggage('Got some snacks and a gun for protection');
+// when we receive input from a user, we usually always start by putting everything into lower case because that makes it a lot easier to then compare it to something
+
 /*
 // Data needed for a later exercise
 const flights =
