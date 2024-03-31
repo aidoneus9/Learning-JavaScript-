@@ -765,6 +765,61 @@ checkBaggage('Socks and camera');
 checkBaggage('Got some snacks and a gun for protection');
 // when we receive input from a user, we usually always start by putting everything into lower case because that makes it a lot easier to then compare it to something
 
+// <124. Working With Strings - Part 3>
+// Split and join
+console.log('a+very+nice+string'.split('+'));
+// ['a', 'very', 'nice', 'string']
+console.log('Jonas Schmedtmann'.split(' '));
+// ['Jonas', 'Schmedtmann']
+
+const [firstName, lastName] = 'Jonas Schmedtmann'.split(' ');
+
+const newName = ['Mr.', firstName, lastName.toUpperCase()].join(' ');
+console.log(newName);
+
+const capitalizeName = function (name) {
+  const names = name.split(' ');
+  const namesUpper = [];
+
+  for (const n of names) {
+    // namesUpper.push(n[0].toUpperCase() + n.slice(1));
+    namesUpper.push(n.replace(n[0], n[0].toUpperCase()));
+  }
+  console.log(namesUpper.join(' '));
+};
+
+capitalizeName('jessica ann smith davis');
+capitalizeName('albus percival wulfric brian dumbledore');
+
+// Padding
+const message = 'Go to gate 23!';
+console.log(message.padStart(20, '+').padEnd(30, '+'));
+console.log('Jonas'.padStart(20, '+').padEnd(30, '+'));
+
+const maskCreditCard = function (number) {
+  // const str = String();
+  const str = number + '';
+  // we can just take the number and then we add an empty string and so the result of this will be the number but as a string. This works because when one of the operands of the plus sign is a string, it will convert all the operands to a string.
+  const last = str.slice(-4);
+  return last.padStart(str.length, '*');
+};
+
+console.log(maskCreditCard(1212073111030919));
+console.log(maskCreditCard('1212073111030919'));
+
+// Repeat
+const message2 = 'Bad weather... All Departures Delayed... ';
+console.log(message2.repeat(5));
+
+const planesInLine = function (n) {
+  console.log(`There are ${n} planes in line ${'🛬'.repeat(n)}`);
+};
+planesInLine(5);
+planesInLine(3);
+planesInLine(12);
+// ➕ mdn string replace를 검색한 후 왼쪽을 보면 다른 string methods를 알 수 있음
+// ex) concat(), reverse()
+
 /*
 // Data needed for a later exercise
 const flights =
