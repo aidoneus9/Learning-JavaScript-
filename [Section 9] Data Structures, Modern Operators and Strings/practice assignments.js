@@ -530,19 +530,7 @@ normalizeAuthorName('  JuliE sussMan (Contributor)');
 // ⚠️ (Contributor)가 없는 경우에는 안 됨.
 
 // The Answer
-// function normalizeAuthorName(author) {
-//   author = author.trim();
-//   const firstName = author.slice(0, author.indexOf(' '));
+function normalizeAuthorName(author) {
+  author = author.trim();
+  const firstName = author.slice(0, author.indexOf(' '));
 
-//   let lastName = '';
-//   if (author.indexOf(' ') === author.lastIndexOf(' ')) {
-//     lastName = author.slice(author.indexOf(' ') + 1, author.length);
-//   } else {
-//     lastName = author.slice(author.indexOf(' ') + 1, author.lastIndexOf(' '));
-//   }
-
-//   const capitalizedFirstName = firstName[0].toUpperCase() + firstName.slice(1).toLowerCase();
-//   const capitalizedLastName = lastName[0].toUpperCase() + lastName.slice(1).toLowerCase();
-
-//   return capitalizedFirstName + ' ' + capitalizedLastName;
-// }
