@@ -513,25 +513,52 @@ isContributor('Robert Sedgewick');
 
 // Working with Strings - Part 2
 // 16.1
+const getCode = str => str.replace(str[0], str[0].toUpperCase());
+
 function normalizeAuthorName(author) {
-  const s = author.toLowerCase().trim();
-  console.log(s); // julie sussman (contributor)
-  const e = s.indexOf(' '); // 5
-  const f = s.lastIndexOf(' '); // 13
-  const d =
-    s[0].toUpperCase() +
-    s.slice(1, e + 1) +
-    s[e + 1].toUpperCase() +
-    s.slice(e + 2, f);
-  console.log(d);
+  const [firstName, lastName, third] = author.toLowerCase().trim().split(' ');
+
+  const output = `${getCode(firstName)} ${getCode(lastName)}`;
+  console.log(output);
 }
 
 normalizeAuthorName('  JuliE sussMan (Contributor)');
-// ⚠️ (Contributor)가 없는 경우에는 안 됨.
 
 // The Answer
-function normalizeAuthorName(author) {
-  console.log(author.trim());
-}
+// function normalizeAuthorName(author) {
+//   author = author.trim();
+//   const firstName = author.slice(0, author.indexOf(' '));
 
-normalizeAuthorName('  JuliE sussMan (Contributor)');
+//   let lastName = '';
+//   if (author.indexOf(' ') === author.lastIndexOf(' ')) {
+//     lastName = author.slice(author.indexOf(' ') + 1, author.length);
+//   } else {
+//     lastName = author.slice(author.indexOf(' ') + 1, author.lastIndexOf(' '));
+//   }
+
+//   const capitalizedFirstName =
+//     firstName[0].toUpperCase() + firstName.slice(1).toLowerCase();
+//   const capitalizedLastName =
+//     lastName[0].toUpperCase() + lastName.slice(1).toLowerCase();
+
+//   return capitalizedFirstName + ' ' + capitalizedLastName;
+// }
+
+// 16.2
+const newBookTitle = books[1].title.replace('Programs', 'Software');
+
+// 16.3
+function logBookTheme(title) {
+  title = title.toLowerCase();
+
+  if (title.startsWith('computer')) console.log('This book is about computers');
+  else if (title.includes('algorithms') && title.includes('structures'))
+    console.log('This book is about algorithms and data structures');
+  else if (
+    (title.endsWith('system') || title.endsWith('systems')) &&
+    !title.includes('operating')
+  )
+    console.log(
+      'This book is about some systems, but definitely not about operating systems'
+    );
+}
