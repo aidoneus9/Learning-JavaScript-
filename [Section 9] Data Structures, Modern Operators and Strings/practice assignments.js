@@ -531,6 +531,7 @@ normalizeAuthorName('  JuliE sussMan (Contributor)');
 
 // The Answer
 function normalizeAuthorName(author) {
-  author = author.trim();
-  const firstName = author.slice(0, author.indexOf(' '));
+  console.log(author.trim());
+}
 
+normalizeAuthorName('  JuliE sussMan (Contributor)');
