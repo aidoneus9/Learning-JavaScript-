@@ -562,3 +562,50 @@ function logBookTheme(title) {
       'This book is about some systems, but definitely not about operating systems'
     );
 }
+
+// Working with Strings - Part 3
+// 17.1
+const bookCategories =
+  'science;computing;computer science;algorithms;business;operating systems;networking;electronics';
+logBookCategories(bookCategories);
+
+function logBookCategories(str) {
+  const categories = str.split(';');
+
+  for (const category of categories) {
+    console.log(category);
+  }
+}
+
+// 17.2
+getKeywordsAsString(books);
+
+function getKeywordsAsString(books) {
+  const keywords = [];
+
+  for (const book of books) {
+    keywords.push(...book.keywords);
+  }
+
+  const uniqueKeywords = [...new Set(keywords)];
+
+  return uniqueKeywords.join(';');
+}
+
+// 17.3
+const bookChapters = [
+  ['The Basics', 14],
+  ['Sorting', 254],
+  ['Searching', 372],
+  ['Graphs', 526],
+  ['Strings', 706],
+];
+logBookChapters(bookChapters);
+
+function logBookChapters(chapters) {
+  for (const [chapter, pages] of chapters) {
+    // console.log(chapter.padEnd(20, '_') + ' ' + pages);
+    const output = `${chapter.padEnd(20, '_')} ${pages}`;
+    console.log(output);
+  }
+}
