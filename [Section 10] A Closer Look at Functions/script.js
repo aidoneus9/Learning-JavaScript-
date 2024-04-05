@@ -38,6 +38,32 @@ const jonas = {
 
 const checkIn = function (flightNum, passenger) {
   flightNum = 'LH999';
+  passenger.name = 'Mr. ' + passenger.name;
+
+  if (passenger.passport === 24739479284) {
+    alert('Checked in');
+  } else {
+    alert('Wrong passport!');
+  }
 };
 
+// checkIn(flight, jonas);
+// console.log(flight); // LH234
+// console.log(jonas); // {name: 'Mr. Jonas Schmedtmann', passport: 24739479284}
+
+// Is the same as doing...
+// const flightNum = flight;
+// const passenger = jonas;
+// passing a primitive type to a function is really just the same as creating a copy like this, outside of the function. So the value is simply copied.
+// On the other hand, when we pass an object to a function, it is really just like copying an object like this. And so whatever we change in a copy will also happen in the original.
+
+// ⚠️
+const newPassport = function (person) {
+  person.passport = Math.trunc(Math.random() * 100000000000);
+};
+
+newPassport(jonas);
 checkIn(flight, jonas);
+
+// JavaScript does not have passing by reference, only passing by value, even though it looks like it's passing by reference. So there are languages like C++, where you can pass a reference to any value, instead of the value itself. This works even with primitives, so you could pass a reference to the value of five, and then the orignial value, outside of the function, would be changed. And this is called pass by reference.
+// As we just learned for objects, we do in fact pass in a reference. So the memory address of the object. However, that reference itself is still a value. It's simply a value that contains a memory address. So basically we pass a reference to the function, but we do not pass by reference, and this is an important distinction.
