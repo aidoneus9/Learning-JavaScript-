@@ -1,5 +1,5 @@
 'use strict';
-
+/*
 // <129. Default Parameters>
 const bookings = [];
 
@@ -67,6 +67,7 @@ checkIn(flight, jonas);
 
 // JavaScript does not have passing by reference, only passing by value, even though it looks like it's passing by reference. So there are languages like C++, where you can pass a reference to any value, instead of the value itself. This works even with primitives, so you could pass a reference to the value of five, and then the orignial value, outside of the function, would be changed. And this is called pass by reference.
 // As we just learned for objects, we do in fact pass in a reference. So the memory address of the object. However, that reference itself is still a value. It's simply a value that contains a memory address. So basically we pass a reference to the function, but we do not pass by reference, and this is an important distinction.
+*/
 
 // <131. First-Class and Higher-Order Functions>
 
@@ -87,6 +88,7 @@ const transformer = function (str, fn) {
   console.log(`Transformed string: ${fn(str)}`);
 
   console.log(`Transformed by: ${fn.name}`);
+  // besides methods, functions can even have properties and one of them is the name property
 };
 
 transformer('JavaScript is the best!', upperFirstWord);
@@ -98,7 +100,14 @@ const high5 = function () {
 };
 document.body.addEventListener('click', high5);
 
-['Jonas', 'Martha', 'Adam'].forEach(high5);
+['Harry', 'Ron', 'Hermione'].forEach(high5);
+// we have three elements in this array and so as the name of the method says, for each of them this callback will be called. And therefore we have three wavings
+
+// Advantages of callback functions
+
+// 1. makes it easy to split up or code into more reusable and interconnected parts
+
+// 2. allow us to create abstraction. So what we did here in our code example(76 ~ 90) was to create a level of abstraction. What abstraction means is that we hide the detail of some code implementation because we don't really care about all that detail. And this allows us to think about problems at a higher more abstract level. And so that's why it's called an abstraction. So coming back to our example here(86), this transformer function does not care at all how the string is transformed. It doesn't care about this level of detail. All that wants to do is to transform a string, but it doesn't care how it should do it. So what I mean is that we could have taken, this code here and written it directly into transformer, or even this code here. That would have worked just the same, but instead we abstracted this code away into other functions. So again, we created a new level of abstraction and by doing this or main transformer function, here is really only concerned with transforming the input string itself. But no matter how that transforming itself actually works. So it's basically delegating the string transformation to the other lower level of functions, which are these two.
 
 // <133. Functions Returning Functions>
 
@@ -109,5 +118,17 @@ const greet = function (greeting) {
 };
 
 const greeterHey = greet('Hey');
-greeterHey('Jonas');
-greeterHey('Steven');
+// what this menas is that we can now call this greeterHey function just as if it was any other function that we defined ourselves
+greeterHey('Harry'); // Hey Harry
+greeterHey('Hermione'); // Hey Hermione
+// 📝 closure
+
+greet('Hello')('Harry'); // Hello Harry
+
+// 📝 functional programming
+
+// Challenge
+// rewrite the greet function using arrow functions
+const greetArr = greeting => name => console.log(`${greeting} ${name}`);
+
+greetArr('Hi')('Harry'); // Hi Harry
