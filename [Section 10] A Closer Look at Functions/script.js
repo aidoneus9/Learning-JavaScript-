@@ -132,3 +132,65 @@ greet('Hello')('Harry'); // Hello Harry
 const greetArr = greeting => name => console.log(`${greeting} ${name}`);
 
 greetArr('Hi')('Harry'); // Hi Harry
+
+// <134. The call and apply Methods>
+const lufthansa = {
+  airline: 'Lufthansa',
+  iataCode: 'LH',
+  bookings: [],
+  // book: function() {}
+  book(flightNum, name) {
+    console.log(
+      `${name} booked a seat on ${this.airline} flight ${this.iataCode}${flightNum}`
+    );
+    this.bookings.push({ flight: `${this.iataCode}${flightNum}`, name });
+  },
+};
+
+lufthansa.book(239, 'Dongkyoung Lee');
+lufthansa.book(635, 'Richard Feynman');
+console.log(lufthansa);
+
+const eurowings = {
+  airline: 'Eurowings',
+  iataCode: 'EW',
+  bookings: [],
+};
+
+const book = lufthansa.book;
+
+// Does NOT work
+// book(23, 'Marie Curie'); // ❌ Cannot read properties of undefined (reading 'airline') at book: because the book function is now just a regular function call and in a regular function call, the this keyword points to undefined at least in strict mode.
+// The book function is no longer this method(142). It is now this separate function(162).
+
+// 👉 We need to tell JavaScript explicitly what the this keyword here should be like. So if we want to book a Lufthansa flight, the this keyword should point to Lufthansa but if we want to book a Eurowings flight, then the this keyword should point to Eurowings.
+
+// ✍️ 3 function methods: Call, Apply, Bind
+// A function is really just an object, and objects have methods and therefore, functions can have methods, too.
+
+// Call method
+book.call(eurowings, 23, 'Marie Curie');
+// in the call method, the first argument is exactly what we want the this keyword to point to.
+console.log(eurowings);
+
+book.call(lufthansa, 239, 'Rosalind Franklin');
+console.log(lufthansa);
+
+const swiss = {
+  airline: 'Swiss Air Lines',
+  iataCode: 'LX',
+  bookings: [],
+};
+
+book.call(swiss, 583, 'Hedy Lamarr');
+console.log(swiss);
+
+// Apply method
+// The apply method does exactly the same thing. The only difference is that apply does not receive a list of arguments after the this keyword, but instead it's gonna take an array of the arguments. And so it will then take the elements from that array and pass it into the function.
+const flightData = [583, 'Katherine Johnson'];
+book.apply(swiss, flightData);
+console.log(swiss);
+// This apply method is not used anymore in modern JavaScript
+
+book.call(swiss, ...flightData);
+// and so right now, with modern JavaScript, I prefer to just always use the call method and then spread out the arguments from an array like this
