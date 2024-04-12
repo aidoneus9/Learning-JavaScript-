@@ -194,3 +194,28 @@ console.log(swiss);
 
 book.call(swiss, ...flightData);
 // and so right now, with modern JavaScript, I prefer to just always use the call method and then spread out the arguments from an array like this
+
+// <135. The bind Method>
+// just like the call method, bind also allows us to manually set this keyword for any function call. Now, the difference is that bind does not immediately call the function. Instead, it returns a new function where this keyword is bound. So it's set to whatever value we pass into bind.
+
+// Bind method
+// book.call(eurowings, 23, 'Marie Curie');
+
+// book.bind(eurowings);
+// we can use the bind method to create a new function with the this keyword also set to eurowings. So again, this will not call the book function. Instead it will return a new function where this keyword will always be set to eurowings.
+
+const bookEW = book.bind(eurowings);
+const bookLH = book.bind(lufthansa);
+const bookLX = book.bind(swiss);
+
+bookEW(23, 'Mary Jackson');
+// this now looks like the normal book function call again. And that's because this function here already has the this keyword set in stone. And so here, we no longer need to specify to this keyword again.
+
+// create a function for one specific airline and a specific flight number
+const bookEW23 = book.bind(eurowings, 23);
+// this function now only needs the name, because the number was already preset here in the bind method
+bookEW23('Dongkyoung Lee');
+bookEW23('Dorothy Vaughan');
+// 📝 partial application: a part of the arguments of the original function are already applied, so which means, already set.
+
+// With Event Listeners
