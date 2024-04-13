@@ -219,3 +219,13 @@ bookEW23('Dorothy Vaughan');
 // 📝 partial application: a part of the arguments of the original function are already applied, so which means, already set.
 
 // With Event Listeners
+lufthansa.planes = 300;
+lufthansa.buyPlane = function () {
+  console.log(this);
+
+  this.planes++;
+  console.log(this.planes);
+};
+lufthansa.buyPlane();
+
+document.querySelector('.buy').addEventListener('click', lufthansa.buyPlanes);
