@@ -226,6 +226,36 @@ lufthansa.buyPlane = function () {
   this.planes++;
   console.log(this.planes);
 };
-lufthansa.buyPlane();
+// lufthansa.buyPlane(); // 301
+// ⚠️ if we simply called a lufthansa.buyPlane out here, then of course, this keyword would be lufthansa
 
-document.querySelector('.buy').addEventListener('click', lufthansa.buyPlanes);
+// document.querySelector('.buy').addEventListener('click', lufthansa.buyPlane);
+//⚠️ we learned that in a event handler function, that this keyword always points to the element on which that handler is attached to
+// ⚠️ in this case this event listener function calling this function and so therefore, the button itself will then become this keyword
+// 👉 Now of course, in this handler function here, we still need this keyword to point to the lufthansa object itself. So what this means is that we need to manually define to this keyword.
+// 👉 We need to pass in a function here and not to call it and so we already know that the call method calls the function. And so that's not what we need and so therefore, we use bind because we already know that bind is gonna return a new function.
+
+document
+  .querySelector('.buy')
+  .addEventListener('click', lufthansa.buyPlane.bind(lufthansa));
+
+// Partial application
+const addTax = (rate, value) => value + value * rate;
+console.log(addTax(0.1, 200));
+
+const addVAT = addTax.bind(null, 0.23);
+// addTax.bind and then the first argument of bind is this keyword. But in this case, we don't care about this keyword at all. It's not even here in the function. And so, we just say, null. It could be any other value because nothing will happen with it, but it's kind of a standard to just use null.
+// same as...
+// addVat = value => value + value * 0.23;
+
+console.log(addVAT(100));
+console.log(addVAT(23));
+
+const addTaxRate = function (rate) {
+  return function (value) {
+    return value + value * rate;
+  };
+};
+const addVAT2 = addTaxRate(0.23);
+console.log(addVAT2(100));
+console.log(addVAT2(23));
