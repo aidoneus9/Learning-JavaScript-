@@ -30,8 +30,6 @@ BONUS TEST DATA 2: [1, 5, 3, 9, 6, 1]
 GOOD LUCK 😀
 */
 
-// 1.2. Based on the input number, update the answers array. For example, if the option is 3, increase the value AT POSITION 3 of the array by 1. Make sure to check if the input is a number and if the number makes sense (e.g answer 52 wouldn't make sense, right?)
-
 const poll = {
   question: 'What is your favourite programming language?',
   options: ['0: JavaScript', '1: Python', '2: Rust', '3: C++'],
@@ -69,6 +67,8 @@ document
   .querySelector('.poll')
   .addEventListener('click', poll.registerNewAnswer.bind(poll));
 
-poll.displayResults.call(poll);
-// [5, 2, 3]
-// [1, 5, 3, 9, 6, 1]
+poll.displayResults.call({ answers: [5, 2, 3] }, 'string');
+// 🤔 We need an object, which contains the answers property here. Otherwise, there is no way for this method to call this.answers(59). And so we can simply create a new object.
+// this works, because this function here is looking for this.answers. But our array is, well, it's simply out here. So we need a way to make this.answers equal to this array. And so that's why we used the call method here so that we could manually set the this keyword, to a new object, which as the answers property has that new array.
+poll.displayResults.call({ answers: [1, 5, 3, 9, 6, 1] }, 'string');
+poll.displayResults.call({ answers: [1, 5, 3, 9, 6, 1] });

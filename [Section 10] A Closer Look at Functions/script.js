@@ -67,7 +67,6 @@ checkIn(flight, jonas);
 
 // JavaScript does not have passing by reference, only passing by value, even though it looks like it's passing by reference. So there are languages like C++, where you can pass a reference to any value, instead of the value itself. This works even with primitives, so you could pass a reference to the value of five, and then the orignial value, outside of the function, would be changed. And this is called pass by reference.
 // As we just learned for objects, we do in fact pass in a reference. So the memory address of the object. However, that reference itself is still a value. It's simply a value that contains a memory address. So basically we pass a reference to the function, but we do not pass by reference, and this is an important distinction.
-*/
 
 // <131. First-Class and Higher-Order Functions>
 
@@ -259,3 +258,41 @@ const addTaxRate = function (rate) {
 const addVAT2 = addTaxRate(0.23);
 console.log(addVAT2(100));
 console.log(addVAT2(23));
+*/
+
+// <137. Immediately Invoked Function Expressions (IIFE)
+// Sometimes in JavaScript, we need a function that is only executed once and then never again(A function that disappears right after it's called once).
+
+const runOnce = function () {
+  console.log('This will never run again');
+};
+runOnce();
+
+// function() {
+//   console.log('This will never run again');
+// }
+// ⚠️ Uncaught SyntaxError: Function statements require a function name
+// However, we can still trick JavaScript into thinking that this is just an expression and we do that by simply wrapping all of this into parentheses.
+
+// IIFE
+(function () {
+  console.log('This will never run again');
+  const isPrivate = 23;
+})();
+// 👉 And so now, we basically transformed the statement that we had before into an expression. This is really just the function value. So it's just a function expression and then immediately, we call it here(). And so this is why this pattern here, is called the Immediately Invoked Function Expression.
+
+// console.log(isPrivate);
+// ⚠️ The scope chain only works the other way around. So the inner scope would have access to anything defined outside, here in the global scope. But the other way around, the global scope does not have access to anything that is inside of a scope. So in this case, of the scope created by this function here(278). Therefore, we say that all data defined inside a scope is private. We also say that this data is encapsulated. So for example, this isPrivate here(280) is encapsulated inside of this function scope, that's created here.
+// ✍️ And data encapsulation and data privacy are extremely important concepts in programming. So many times we actually need to protect our variables, from being accidentally overwritten by some other parts of the program or even with external scripts or libraries(📎 object oriented programming). It's important to hide variables and the scopes are a good tool for doing this. And this is also the reason why the IIFEs were invented.
+
+(() => console.log('This will ALSO never run again'))();
+
+{
+  const isPrivate = 23;
+  var notPrivate = 46;
+}
+// console.log(isPrivate);
+console.log(notPrivate);
+// so that's because this one here(292) was declared with var, and therefore it does completely ignore this block here essentially
+// 👉 and this is the reason why now in modern JavaScript, IIFEs are not that used anymore because if all we want is to create a new scope for data privacy, all we need to do is to just create a block like this(290, 293). There is no need to create a function to create a new scope, unless we want to use var for our variables.
+// 👉 Now on the other hand, if what you really need is to execute a function just once, then the IIFE pattern is still way to go, even now with modern JavaScript.
