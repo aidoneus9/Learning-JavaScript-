@@ -296,3 +296,19 @@ console.log(notPrivate);
 // so that's because this one here(292) was declared with var, and therefore it does completely ignore this block here essentially
 // 👉 and this is the reason why now in modern JavaScript, IIFEs are not that used anymore because if all we want is to create a new scope for data privacy, all we need to do is to just create a block like this(290, 293). There is no need to create a function to create a new scope, unless we want to use var for our variables.
 // 👉 Now on the other hand, if what you really need is to execute a function just once, then the IIFE pattern is still way to go, even now with modern JavaScript.
+
+// <138. Closures>
+const secureBooking = function () {
+  let passengerCount = 0;
+
+  return function () {
+    passengerCount++;
+    console.log(`${passengerCount} passengers`);
+  };
+};
+
+const booker = secureBooking();
+
+booker();
+booker();
+booker();
