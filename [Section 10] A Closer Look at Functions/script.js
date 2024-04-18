@@ -314,8 +314,26 @@ booker();
 booker();
 
 console.dir(booker);
+// ➕ whenever you see these double brackets([[]]), that means that it is an internal property, which we cannot access from our code
 
 // <139. More Closure Examples>
+// both of these examples are gonna demonstrate that we don't need to return a function from another function in order to create a closure
+
+// Example 1
+/*
+let f;
+
+const g = function () {
+  const a = 23;
+  f = function () {
+    console.log(a * 2);
+  };
+};
+
+g();
+f(); // so at this point of the execution, the variable environment of g is no longer there. But f, so this function here closed over that variable environment and therefore it is able to access the a variable(the a variable is inside the backpack of the f function).
+// 📎 close over: https://stackoverflow.com/questions/30700027/what-does-it-mean-to-close-over-something
+*/
 
 let f;
 
@@ -329,9 +347,58 @@ const g = function () {
 const h = function () {
   const b = 777;
   f = function () {
-    console.log(b * 2);
+    console.log(b * 2); // 1554
   };
 };
 
 g();
 f();
+console.dir(f); // 0: Closure (g) {a: 23}
+// so at this point in time, the closure is indeed a 23
+
+// Re-assigning f function
+h();
+f(); // ⚠️ keeping in mind that F at this point is a different function with this one here because it was reassigned by h
+console.dir(f); // 0: Closure (h) {b: 777}
+// and os then as we reassign the function to a new value, then that old closure disappears and now the closure is b, so this variable here of the birthplace(347) where it was reassigned
+// The function was kind of born inside of g first and then it was essentially reborn again in h. And so first the closure contained the a variableof its first birthplace, and then as it was reborn then it remembered this b variable off its birthplace.
+
+// ✍️ so whenever something like this happens where you reassigned functions even without returning them, keep in mind that also this will create a closure
+
+// Example 2
+
+// setTimeout(function () {
+//   console.log('TIMER');
+// }, 1000); // this is essentially a callback function and in this case it is literally called later(after one second)
+// ✍️ setTimeout function needs 2 parameters: The first one is a function which will be executed and this function will be executed after a certain time. The second argument is milliseconds(and so that will mean whatever code is inside of this function will be executed after one second, 372)
+
+/*
+const boardPassengers = function (n, wait) {
+  const perGroup = n / 3;
+
+  setTimeout(function () {
+    console.log(`We are now boarding all ${n} passengers`);
+    console.log(`There are 3 groups, each with ${perGroup} passengers`);
+  }, wait * 1000);
+
+  console.log(`Will start boarding in ${wait} seconds`);
+};
+
+boardPassengers(180, 3);
+// ⚠️ keep in mind that this callback function(378 function(){}) was executed completely independently from the board passengers function. But still, the callback function was able to use all the variables that were in the variable environment in which it was created. So that's n and perGroup and this is a clear sign of a closure being created. So the only way in which this callback function here can have access to the variables that are defined in the board passengers function that has long finished execution is if it created a closure. That's how we got access to perGroup, and also this argument of the function(wait).
+// The closure also includes the arguments and that's because they are really just local variables in the function.
+*/
+
+// ➕ prove that the closure does in fact have priority over the scope chain
+const boardPassengers = function (n, wait) {
+  const perGroup = n / 3;
+
+  setTimeout(function () {
+    console.log(`We are now boarding all ${n} passengers`);
+    console.log(`There are 3 groups, each with ${perGroup} passengers`);
+  }, wait * 1000);
+
+  console.log(`Will start boarding in ${wait} seconds`);
+};
+
+boardPassengers(180, 3);
