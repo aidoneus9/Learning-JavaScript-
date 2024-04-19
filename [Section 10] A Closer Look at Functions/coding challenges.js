@@ -72,3 +72,25 @@ poll.displayResults.call({ answers: [5, 2, 3] }, 'string');
 // this works, because this function here is looking for this.answers. But our array is, well, it's simply out here. So we need a way to make this.answers equal to this array. And so that's why we used the call method here so that we could manually set the this keyword, to a new object, which as the answers property has that new array.
 poll.displayResults.call({ answers: [1, 5, 3, 9, 6, 1] }, 'string');
 poll.displayResults.call({ answers: [1, 5, 3, 9, 6, 1] });
+
+// Coding Challenge #2
+
+/* 
+This is more of a thinking challenge than a coding challenge 🤓
+
+Take the IIFE below and at the end of the function, attach an event listener that changes the color of the selected h1 element ('header') to blue, each time the BODY element is clicked. Do NOT select the h1 element again!
+
+And now explain to YOURSELF (or someone around you) WHY this worked! Take all the time you need. Think about WHEN exactly the callback function is executed, and what that means for the variables involved in this example.
+
+GOOD LUCK 😀
+*/
+
+(function () {
+  const header = document.querySelector('h1');
+  header.style.color = 'red';
+
+  document.querySelector('body').addEventListener('click', function () {
+    header.style.color = 'blue';
+  });
+})();
+// In this particular example, the closure is necessary or it's useful because by the time this callback is executed(92), this IIFE, is now long gone. So it has already been executed. And with it, this variable here is basically gone as well(const header). So all of that is gone, but still, this function here is attached to the body element. And so it's waiting for some events to happen there. And when the event happens, this function here is executed. Even though the environment in which this function here was created is already gone, it is still able to access the variables that were created in that variable by the time the function was born, so to say. So (89) is the birthplace of, or eventhandler function, and therefore the function remembers🧠 all the variables present at a time of its birth. We can also say that the header is in the backpack🎒 of this function(92).

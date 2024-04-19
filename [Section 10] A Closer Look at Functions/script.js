@@ -401,4 +401,6 @@ const boardPassengers = function (n, wait) {
   console.log(`Will start boarding in ${wait} seconds`);
 };
 
+const perGroup = 1000;
+// If the scope chain had priority over the closure, then this callback function(396) would indeed use this variable(404), this global variable, because we can imagine this function here(396) basically being executed in the global scope. So if it wasn't for the closure, it would use this.
 boardPassengers(180, 3);
