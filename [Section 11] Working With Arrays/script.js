@@ -127,6 +127,35 @@ movements.forEach(function (mov, i, arr) {
 // ✍️ one fundamental difference between the two of them is that YOU CANNOT BREAK OUT OF A FOREACH LOOP. So the continue and break statements do not work in a forEach loop at all. So instead, forEach will always loop over the entire array and there is nothing that you can do about it.
 // 👉 if you really need to break out of a loop, then you have to keep using the for of loop. But other than that, it really comes down to your personal preference.
 
+// <146. forEach With Maps and Sets>
+// Map 🧭
+const currencies = new Map([
+  ['USD', 'United States dollar'],
+  ['EUR', 'Euro'],
+  ['GBP', 'Pound sterling'],
+]);
+
+currencies.forEach(function (value, key, map) {
+  console.log(`${key}: ${value}`);
+});
+
+// Set 🎫
+// const currenciesUnique = new Set(['USD', 'GBP', 'USD', 'EUR', 'EUR']);
+// console.log(currenciesUnique);
+// currenciesUnique.forEach(function (value, key, map) {
+//   console.log(`${key}: ${value}`);
+// });
+// USD: USD
+// GBP: GBP
+// EUR: EUR
+// what this means is that the key here is exactly the same as the value because a set doesn't have keys and it doesn't have indexes, either. And so there is no value that would make sense for the key.
+
+const currenciesUnique = new Set(['USD', 'GBP', 'USD', 'EUR', 'EUR']);
+console.log(currenciesUnique);
+currenciesUnique.forEach(function (value, _, map) {
+  console.log(`${value}: ${value}`);
+});
+// _(underscore): in JavaScript, it means a throwaway variable, a variable that is completely unnecessary
 ////////////////////////////
 // BANKIST APP
 
@@ -186,9 +215,3 @@ const inputTransferAmount = document.querySelector('.form__input--amount');
 const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
-
-const currencies = new Map([
-  ['USD', 'United States dollar'],
-  ['EUR', 'Euro'],
-  ['GBP', 'Pound sterling'],
-]);
