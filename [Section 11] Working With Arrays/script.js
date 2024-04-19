@@ -75,9 +75,59 @@ console.log(arr.at(-1)); // 64
 
 // ➕ also works on strings
 console.log('choco'.at(0)); // c
-console.log('choco'.at(-1)); // o
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
+
+// <145. Looping Arrays: forEach>
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+for (const movement of movements) {
+  if (movement > 0) {
+    console.log(`You deposited ${movement}`);
+  } else {
+    console.log(`You withdraw ${Math.abs(movement)}`);
+  }
+}
+
+// forEach 🛞
+// 1. to loop over the array, and in each iteration it will execute the callback function
+// 2. as the forEach method calls the callback function in each iteration, it will pass in the current element of the array as an argument
+
+console.log('---- FOREACH ----');
+movements.forEach(function (movement) {
+  if (movement > 0) {
+    console.log(`You deposited ${movement}`);
+  } else {
+    console.log(`You withdraw ${Math.abs(movement)}`);
+  }
+});
+// 0: function(200)
+// 1: function(450)
+// 2: function(400)
+// ...
+// 👉 this is exactly the concept that I explained in the last section, when I said that we use a callback function to tell another higher-order function exactly what it should do, and so in this case we tell forEach that in each iteration, it should log one of these two strings here to the console. So we give the forEach method instructions by giving it a callback function which contains these instructions.
+
+// 📌 access to a counter variable
+// ⚠️ notice that the order of the parameters is different in both scenarios
+for (const [i, movement] of movements.entries()) {
+  if (movement > 0) {
+    console.log(`Movement ${i + 1}: You deposited ${movement}`);
+  } else {
+    console.log(`Movement ${i + 1}: You withdraw ${Math.abs(movement)}`);
+  }
+}
+
+console.log('---- FOREACH ----');
+movements.forEach(function (mov, i, arr) {
+  if (mov > 0) {
+    console.log(`Movement ${i + 1}: You deposited ${mov}`);
+  } else {
+    console.log(`Movement ${i + 1}: You withdraw ${Math.abs(mov)}`);
+  }
+});
+
+// ✍️ one fundamental difference between the two of them is that YOU CANNOT BREAK OUT OF A FOREACH LOOP. So the continue and break statements do not work in a forEach loop at all. So instead, forEach will always loop over the entire array and there is nothing that you can do about it.
+// 👉 if you really need to break out of a loop, then you have to keep using the for of loop. But other than that, it really comes down to your personal preference.
+
+////////////////////////////
 // BANKIST APP
 
 // Data
@@ -137,16 +187,8 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
-// LECTURES
-
 const currencies = new Map([
   ['USD', 'United States dollar'],
   ['EUR', 'Euro'],
   ['GBP', 'Pound sterling'],
 ]);
-
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-
-/////////////////////////////////////////////////
