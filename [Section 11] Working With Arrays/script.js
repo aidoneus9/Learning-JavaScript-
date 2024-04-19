@@ -1,5 +1,5 @@
 'use strict';
-
+/*
 // <143. Simple Array Methods>
 // ✍️ methods are simply functions that we can call on objects. So basically, they are functions attached to objects. So if we have array methods, that means that arrays themselves are also objects and so these array methods are simply functions that are attached to all arrays that we create in JavaScript.
 // 📝 why all arrays have access to this methods: prototypal inheritance
@@ -58,7 +58,24 @@ console.log([...arr, ...arr2]); // ['a', 'b', 'c', 'd', 'e', 'f', 'j', 'g', 'h',
 
 // JOIN 🪡
 console.log(letters.join(' - ')); // a - b - c - d - e - f - j - g - h - i - j
+*/
 
+// <144. The new at Method>
+const arr = [23, 11, 64];
+console.log(arr[0]); // 23
+console.log(arr.at(0)); // 23
+
+// 📌 getting last array element
+console.log(arr[arr.length - 1]); // 64
+console.log(arr.slice(-1)[0]); // 64
+console.log(arr.at(-1)); // 64
+// console.log(arr.at(-2)); // 11
+// at method: get the last element of an array || start counting from the end of an array || do something called 'method chaining'
+// []: quickly get a value from an array(ex. first element)
+
+// ➕ also works on strings
+console.log('choco'.at(0)); // c
+console.log('choco'.at(-1)); // o
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // BANKIST APP
