@@ -156,7 +156,10 @@ currenciesUnique.forEach(function (value, _, map) {
   console.log(`${value}: ${value}`);
 });
 // _(underscore): in JavaScript, it means a throwaway variable, a variable that is completely unnecessary
-////////////////////////////
+
+// <147. PROJECT: "Bankist" App>
+// 💡 one object for each account and you could ask why not use a map instead of an object. The thing is that we're gonna pretend that all these data is coming from a Web API. And whenever we get data from an API, this data usually comes in a form of objects.
+
 // BANKIST APP
 
 // Data
