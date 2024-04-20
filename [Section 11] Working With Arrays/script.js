@@ -160,6 +160,8 @@ currenciesUnique.forEach(function (value, _, map) {
 // <147. PROJECT: "Bankist" App>
 // 💡 one object for each account and you could ask why not use a map instead of an object. The thing is that we're gonna pretend that all these data is coming from a Web API. And whenever we get data from an API, this data usually comes in a form of objects.
 
+// <148. Creating DOM Elements>
+
 // BANKIST APP
 
 // Data
@@ -218,3 +220,35 @@ const inputTransferAmount = document.querySelector('.form__input--amount');
 const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
+
+// ✍️ Now we could simply start writing our code out here in the global context. However,that is not a good practice. So whenever we do something like this, it's always best to create a function.
+const displayMovements = function (movements) {
+  containerMovements.innerHTML = '';
+  // The first thing is to essentially empty the entire container, and only then we start adding new elements.
+  // ⚠️ textContent simply returns the text itself, while HTML returns everything, including the HTML. So all the HTML tags will be included.
+  // .textContent = 0
+
+  movements.forEach(function (mov, i) {
+    const type = mov > 0 ? 'deposit' : 'withdrawal';
+
+    const html = `
+      <div class="movements__row">
+        <div class="movements__type    movements__type--${type}">${
+      i + 1
+    } ${type}</div>
+        <div class="movements__value">${mov}</div>
+      </div>
+    `;
+
+    containerMovements.insertAdjacentHTML('afterbegin', html);
+    // insertAdjacentHTML(): this method accepts two strings. The first string is the position in which we want to attach the HTML. The second argument is the string containing the HTML that we want to insert.
+    // 📎 MDN
+  });
+};
+
+displayMovements(account1.movements);
+// because this function should receive one array of movements and then work with that data. So in this case, that's the movements that it should display in the user interface. And so it's a good practice to pass the data into a function, instead of, for example, having this function work with a global variable. That would work as well, but it's a lot better to pass that data directly into the function.
+// 👉 Instead of working with global variables, start passing the data that function needs actually into that function.
+
+// console.log(containerMovements.innerHTML);
+// we can also use innerHTML to read data
