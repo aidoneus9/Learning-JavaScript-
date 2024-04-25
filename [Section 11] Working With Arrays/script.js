@@ -163,6 +163,7 @@ currenciesUnique.forEach(function (value, _, map) {
 // <148. Creating DOM Elements>
 
 // BANKIST APP
+// https://bankist.netlify.app/
 
 // Data
 const account1 = {
@@ -252,3 +253,5 @@ displayMovements(account1.movements);
 
 // console.log(containerMovements.innerHTML);
 // we can also use innerHTML to read data
+
+// <150. Data Transformations: map, filter, reduce>
