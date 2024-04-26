@@ -255,3 +255,76 @@ displayMovements(account1.movements);
 // we can also use innerHTML to read data
 
 // <150. Data Transformations: map, filter, reduce>
+// ✍️ these are the methods that we use to CREATE NEW ARRAYS based on transforming data from other arrays
+
+// 🍫 map: yet another method that we can use to loop over arrays. So, map is actually similar to the forEach method, but with the difference that map creates a brand new array based on the original array. So essentially the map method takes an array, loops over that array, and in each iteration, it applies callback function that we specify on our code to the current array element.
+// 👉 usually way more useful than in forEach method, because forEach simply allows us to do some work with each array element. But map on the other hand, builds us a brand new array containing the results of applying an operation to the original array.
+
+// 🍫 filter: is used to filter for elements in the original array which satisfy a certain condition.
+
+// 🍫 reduce: is used to boil down all the elements of the original array into ONE SINGLE VALUE(not new array)(snowball effect)
+
+// <151. The map Method>
+// convert movements from euros to US dollars
+const eurToUsd = 1.1;
+
+// const movementsUSD = movements.map(function (mov) {
+//   return mov * eurToUsd;
+// });
+
+const movementsUSD = movements.map(mov => mov * eurToUsd);
+
+console.log(movements);
+console.log(movementsUSD);
+
+// for of loop
+const movementsUSDfor = [];
+for (const mov of movements) movementsUSDfor.push(mov * eurToUsd);
+console.log(movementsUSDfor);
+
+const movementsDescriptions = movements.map(
+  (mov, i) =>
+    `Movement ${i + 1}: You ${mov > 0 ? 'deposited' : 'withdrew'} ${Math.abs(
+      mov
+    )}`
+);
+// ✍️ keep in mind why we actually get access to these 2 parameters here(286). All we do here is to pass this callback function into the map method. But we do not call this function by ourselves. It is the map method who we'll call this function for each of the array elements in the movement array. Each time that the map method calls or callback, it will simply pass in the current array element as well as the current index and the whole array.
+// ✍️ there is a big, big difference between the map method and the forEach method. So before, we printed each line individually to the console, as we were looping over the array. So in each of the iteration, we performed some action that was then visible in the console and we can call this a side effect. So the forEach method creates SIDE EFFECTS. But now, here with this map method, all we did was to return each of the strings from the callback, and so basically they got added into a new array. And then finally we logged that entire array to the console and NOT THE ELEMENTS ONE BY ONE. And so here in this map method we did not create a side effect in each of the iteration. All we did was to build a brand new array.
+
+// const movementsDescriptions = movements.map((mov, i, arr) => {
+//   if (mov > 0) {
+//     return `Movement ${i + 1}: You deposited ${mov}`;
+//   } else {
+//     return `Movement ${i + 1}: You withdraw ${Math.abs(mov)}`;
+//   }
+// }); // it's completely acceptable to have 2 return statements or even more in the same function as long as only one of them is executed
+console.log(movementsDescriptions);
+
+// <152. Computing Usernames>
+// (250)
+const createUsernames = function (user) {
+  const username = user
+    .toLowerCase() // returns a string
+    .split(' ') // available on all strings
+    .map(name => name[0]) // ['s', 't', 'w']
+    // so we transform name to name at the first position
+    .join(''); // stw
+  return username;
+};
+console.log(createUsernames('Steven Thomas Williams'));
+
+// 📌 Now we actually want to compute one username for each of the account holders in our accounts array. 👉 we do not want to create a new array in this situation, all we want to do is to modify the object, so the elements that already exist in the accounts array(197). And so what we want is to simply loop over this array here, and then do something. And so for that, we use forEach.
+
+// ✍️ instead of simply receiving one user, what we want to do is to receive all the accounts. So basically an array of account.
+// 👉 each function should actually receive the data that it should work with, instead of using a global variable. We do not want to rely on the accounts array that we already have. But instead, we want to pass it into the function.
+
+const createUsernames = function (accs) {
+  const username = user
+    .toLowerCase() // returns a string
+    .split(' ') // available on all strings
+    .map(name => name[0]) // ['s', 't', 'w']
+    // so we transform name to name at the first position
+    .join(''); // stw
+  return username;
+};
+createUsernames(accounts);
