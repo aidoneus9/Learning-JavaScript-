@@ -300,6 +300,7 @@ const movementsDescriptions = movements.map(
 // }); // it's completely acceptable to have 2 return statements or even more in the same function as long as only one of them is executed
 console.log(movementsDescriptions);
 
+/*
 // <152. Computing Usernames>
 // (250)
 const createUsernames = function (user) {
@@ -312,19 +313,58 @@ const createUsernames = function (user) {
   return username;
 };
 console.log(createUsernames('Steven Thomas Williams'));
-
+*/
 // 📌 Now we actually want to compute one username for each of the account holders in our accounts array. 👉 we do not want to create a new array in this situation, all we want to do is to modify the object, so the elements that already exist in the accounts array(197). And so what we want is to simply loop over this array here, and then do something. And so for that, we use forEach.
 
 // ✍️ instead of simply receiving one user, what we want to do is to receive all the accounts. So basically an array of account.
 // 👉 each function should actually receive the data that it should work with, instead of using a global variable. We do not want to rely on the accounts array that we already have. But instead, we want to pass it into the function.
 
 const createUsernames = function (accs) {
-  const username = user
-    .toLowerCase() // returns a string
-    .split(' ') // available on all strings
-    .map(name => name[0]) // ['s', 't', 'w']
-    // so we transform name to name at the first position
-    .join(''); // stw
-  return username;
+  accs.forEach(function (acc) {
+    // in this case, the side effects are gonna be to change, so to mutate the original accounts array
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(' ')
+      .map(name => name[0])
+      .join('');
+  });
 };
+// in this function, we do not return anything, because what we're doing here is to produce a side effect. So we are doing something to this account object here(324), and so there is no need to return anything.
 createUsernames(accounts);
+console.log(accounts);
+
+// <153. The filter Method>
+const deposits = movements.filter(function (mov) {
+  return mov > 0;
+});
+console.log(movements);
+console.log(deposits);
+
+// same with...
+const depositsFor = [];
+for (const mov of movements) if (mov > 0) depositsFor.push(mov);
+console.log(depositsFor);
+
+const withdrawls = movements.filter(mov => mov < 0);
+console.log(withdrawls);
+
+// <154. The reduce Method>
+console.log(movements);
+
+// accumulator -> SNOWBALL
+// const balance = movements.reduce(function (acc, cur, i, arr) {
+//   console.log(`Iteration ${i}: ${acc}`);
+//   return acc + cur;
+// }, 0);
+// This works because in each call of callback function, the accumulator will be the current sum of all the previous values. And so we will really keep adding to this accumulator in each iteration of the loop.
+// Finally, we also need to RETURN this value here from the callback. And so this is how the new accumulator can then be used in the next iteration of the loop. So in each loop iteration, we return the updated accumulator(so the current one) + the new current value, and so like this, we can then keep adding to it in the next iteration.
+// console.log(balance); // 3840 (one single number)
+
+const balance = movements.reduce((acc, cur) => acc + cur, 0);
+console.log(balance);
+
+// same with...
+let balance2 = 0;
+for (const mov of movements) balance2 += mov;
+console.log(balance2);
+// We always need an external variable(364) whenever we want to use a for loop, and that's fine if you only need one loop, but it starts to become really cumbersome and unpractical when we use many loops for doing many operations.
