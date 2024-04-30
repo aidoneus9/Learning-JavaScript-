@@ -368,3 +368,38 @@ let balance2 = 0;
 for (const mov of movements) balance2 += mov;
 console.log(balance2);
 // We always need an external variable(364) whenever we want to use a for loop, and that's fine if you only need one loop, but it starts to become really cumbersome and unpractical when we use many loops for doing many operations.
+
+// below (250)
+const calcDisplayBalance = function (movement) {
+  const balance = movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${balance} EUR`;
+  // (202)
+  // label: all the things where we simply wwant to put some text 📝
+};
+calcDisplayBalance(account1.movements);
+
+// Maximum value
+// reduce is for boiling down the array into just one single value, BUT THAT VALUE CAN BE WHATEVER WE WANT. So it doesn't have to be a sum. It could be a multiplication or even something completely different, like a string or an object
+const max = movements.reduce(
+  (acc, mov) => (acc > mov ? acc : mov),
+  movements[0]
+);
+console.log(max);
+// ⚠️ That's always the big question that we have to ask when we use reduce. So up here(363), when we wanted to add all the numbers together, the purpose of the accumulator was to keep track of the current sum. And so here, the accumulator will be the one that will keep track of the current maximum value.
+
+// <156. The Magic of Chaining Methods>
+console.log(movements);
+
+// PIPELINE
+const totalDepositsUSD = movements
+  .filter(mov => mov > 0)
+  // .map(mov => mov * eurToUsd)
+  .map((mov, i, arr) => {
+    // console.log(arr); 🪛
+    return mov * eurToUsd;
+  })
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(totalDepositsUSD);
+// we could chain many other methods here as well, as long as they return NEW ARRAYS. filter returns a new array, the same goes for map, but reduce, will return a value. So here we could now not have chained a map or a filter after this. So we can only chain a method after another one, if the first one returns an array.
+
+// 🪛 FOR DEBUG: we can inspect the current array at any stage of the pipeline using the third parameter of the callback function.
