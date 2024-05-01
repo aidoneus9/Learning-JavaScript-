@@ -430,3 +430,18 @@ console.log(totalDepositsUSD);
 // ex. sometimes we create way more map methods then we actually need, where we could just do it all in just one map call. So when you chain methods like this, keep looking for opportunities of keeping up your code's performance.
 // ⚠️ 2. It is a bad practice to chain methods that mutate the underlying original array. And an example of that is the splice method. So you should not chain a method like the splice or the reverse method(in a large scale application).
 // It's usually always a good practice to avoid mutating arrays.
+
+// <158. The find Method>
+// retrieve one element of an array based on a condition
+const firstWithdrawal = movements.find(mov => mov < 0);
+// Like the filter method, the find method also needs a callback function that returns a Boolean.
+// Unlike the filter method, the find method will actually not return a new array but it will only return the FIRST element in the array that satisfies this condition(the first element in the array for which this operation here becomes true).
+console.log(movements);
+console.log(firstWithdrawal); // -400
+
+// Fundamental differences between the find and the filter
+// 1.The filter method returns all the elements that match the condition while the find method only returns the first one.
+// 2. The filter method returns a new array while find only returns the element itself and not an array.
+
+console.log(accounts); // array which contains 4 objects where each of them is one account
+// 😊 using find, we can basically find an object in the array based on some property of that object
