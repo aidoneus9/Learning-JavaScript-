@@ -237,7 +237,7 @@ const displayMovements = function (movements) {
         <div class="movements__type    movements__type--${type}">${
       i + 1
     } ${type}</div>
-        <div class="movements__value">${mov}</div>
+        <div class="movements__value">${mov}€</div>
       </div>
     `;
 
@@ -372,12 +372,34 @@ console.log(balance2);
 // below (250)
 const calcDisplayBalance = function (movement) {
   const balance = movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${balance} EUR`;
+  labelBalance.textContent = `${balance}€`;
   // (202)
   // label: all the things where we simply wwant to put some text 📝
 };
 calcDisplayBalance(account1.movements);
 
+const calcDisplaySummary = function (movements) {
+  const incomes = movements
+    .filter(mov => mov > 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumIn.textContent = `${incomes}€`;
+
+  const out = movements
+    .filter(mov => mov < 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumOut.textContent = `${Math.abs(out)}€`;
+
+  const interest = movements
+    .filter(mov => mov > 0)
+    .map(deposit => (deposit * 1.2) / 100)
+    .filter((int, i, arr) => {
+      console.log(arr);
+      return int >= 1;
+    })
+    .reduce((acc, int) => acc + int, 0);
+  labelSumInterest.textContent = `${interest}€`;
+};
+calcDisplaySummary(account1.movements);
 // Maximum value
 // reduce is for boiling down the array into just one single value, BUT THAT VALUE CAN BE WHATEVER WE WANT. So it doesn't have to be a sum. It could be a multiplication or even something completely different, like a string or an object
 const max = movements.reduce(
@@ -403,3 +425,8 @@ console.log(totalDepositsUSD);
 // we could chain many other methods here as well, as long as they return NEW ARRAYS. filter returns a new array, the same goes for map, but reduce, will return a value. So here we could now not have chained a map or a filter after this. So we can only chain a method after another one, if the first one returns an array.
 
 // 🪛 FOR DEBUG: we can inspect the current array at any stage of the pipeline using the third parameter of the callback function.
+
+// ⚠️ 1. We should not overuse chaining. So we should try to optimize it, because chaining tons of methods one after the other can cause a real performance issues if we have really huge arrays. So if we have a huge chain of methods, chained one after the other, we should try to compress all the functionality that they do into as little methods as possible
+// ex. sometimes we create way more map methods then we actually need, where we could just do it all in just one map call. So when you chain methods like this, keep looking for opportunities of keeping up your code's performance.
+// ⚠️ 2. It is a bad practice to chain methods that mutate the underlying original array. And an example of that is the splice method. So you should not chain a method like the splice or the reverse method(in a large scale application).
+// It's usually always a good practice to avoid mutating arrays.
