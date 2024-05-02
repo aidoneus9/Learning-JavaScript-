@@ -445,3 +445,33 @@ console.log(firstWithdrawal); // -400
 
 console.log(accounts); // array which contains 4 objects where each of them is one account
 // 😊 using find, we can basically find an object in the array based on some property of that object
+
+const account = accounts.find(acc => acc.owner === 'Jessica Davis');
+console.log(account);
+// usually the goal of the find method is to just find exactlyl one element, and therefore we usually set up a condition where only one element can satisfy that condition(that's why we used the equal operator)
+
+// ✏️ for of loop
+
+// <159. Implementing Login>
+
+// Event handler
+let currentAccount; // It's good thing to have this big important information(464) outside of this function, so that we can then remember it for other actions in our application. For example, when we transfer money, then we need know from which account that money should go.
+
+btnLogin.addEventListener('click', function (e) {
+  // Prevent form from submitting
+  e.preventDefault();
+
+  currentAccount = accounts.find(
+    acc => acc.username === inputLoginUsername.value
+  );
+  console.log(currentAccount);
+
+  if (currentAccount && currentAccount.pin === Number(inputLoginPin.value)) {
+    console.log('LOGIN');
+  }
+  // Optional chaining(?.): the pin property will only be read in case that the currentAccount actually exists
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    console.log('LOGIN');
+  }
+});
+// hitting enter === clikcing
