@@ -246,8 +246,6 @@ const displayMovements = function (movements) {
     // 📎 MDN
   });
 };
-
-displayMovements(account1.movements);
 // because this function should receive one array of movements and then work with that data. So in this case, that's the movements that it should display in the user interface. And so it's a good practice to pass the data into a function, instead of, for example, having this function work with a global variable. That would work as well, but it's a lot better to pass that data directly into the function.
 // 👉 Instead of working with global variables, start passing the data that function needs actually into that function.
 
@@ -370,28 +368,27 @@ console.log(balance2);
 // We always need an external variable(364) whenever we want to use a for loop, and that's fine if you only need one loop, but it starts to become really cumbersome and unpractical when we use many loops for doing many operations.
 
 // below (250)
-const calcDisplayBalance = function (movement) {
+const calcDisplayBalance = function (movements) {
   const balance = movements.reduce((acc, mov) => acc + mov, 0);
   labelBalance.textContent = `${balance}€`;
   // (202)
-  // label: all the things where we simply wwant to put some text 📝
+  // label: all the things where we simply want to put some text 📝
 };
-calcDisplayBalance(account1.movements);
 
-const calcDisplaySummary = function (movements) {
-  const incomes = movements
+const calcDisplaySummary = function (acc) {
+  const incomes = acc.movements
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
   labelSumIn.textContent = `${incomes}€`;
 
-  const out = movements
+  const out = acc.movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
   labelSumOut.textContent = `${Math.abs(out)}€`;
 
-  const interest = movements
+  const interest = acc.movements
     .filter(mov => mov > 0)
-    .map(deposit => (deposit * 1.2) / 100)
+    .map(deposit => (deposit * acc.interestRate) / 100)
     .filter((int, i, arr) => {
       console.log(arr);
       return int >= 1;
@@ -399,7 +396,7 @@ const calcDisplaySummary = function (movements) {
     .reduce((acc, int) => acc + int, 0);
   labelSumInterest.textContent = `${interest}€`;
 };
-calcDisplaySummary(account1.movements);
+
 // Maximum value
 // reduce is for boiling down the array into just one single value, BUT THAT VALUE CAN BE WHATEVER WE WANT. So it doesn't have to be a sum. It could be a multiplication or even something completely different, like a string or an object
 const max = movements.reduce(
@@ -466,12 +463,34 @@ btnLogin.addEventListener('click', function (e) {
   );
   console.log(currentAccount);
 
-  if (currentAccount && currentAccount.pin === Number(inputLoginPin.value)) {
-    console.log('LOGIN');
-  }
+  // if (currentAccount && currentAccount.pin === Number(inputLoginPin.value)) {
+  //   console.log('LOGIN');
+  // }
   // Optional chaining(?.): the pin property will only be read in case that the currentAccount actually exists
   if (currentAccount?.pin === Number(inputLoginPin.value)) {
-    console.log('LOGIN');
+    // 🔖 Display UI and message
+    labelWelcome.textContent = `Welcome back, ${
+      currentAccount.owner.split(' ')[0]
+    }`;
+    // (style.css) opacity: 0 -> lock the user in -> opacity: 100(default)
+    containerApp.style.opacity = 100;
+    // containerApp: the element that we selected previously, which has this app class. This element, we will manipulate the style and in particular, the opacity style.
+    // Remember that it's also good to use classes for this, but in this case, it's really just one style.
+
+    // 🔖 Clear input fields
+    inputLoginUsername.value = inputLoginPin.value = '';
+    // because the assignment operator works from right to left, inputLoginPin will become the empty string. Then empty string will also be assigned to inputLoginUsername.
+    inputLoginPin.blur(); // input fields lose their focus
+
+    // 🔖 Display movements
+    displayMovements(currentAccount.movements);
+    // This method(function) expects a movement argument(as we hovered this function name, VS Code shows it to us).
+
+    // 🔖 Display balance
+    calcDisplayBalance(currentAccount.movements);
+
+    // 🔖 Display summary
+    calcDisplaySummary(currentAccount);
   }
 });
 // hitting enter === clikcing
