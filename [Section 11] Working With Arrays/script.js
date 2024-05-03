@@ -368,9 +368,9 @@ console.log(balance2);
 // We always need an external variable(364) whenever we want to use a for loop, and that's fine if you only need one loop, but it starts to become really cumbersome and unpractical when we use many loops for doing many operations.
 
 // below (250)
-const calcDisplayBalance = function (movements) {
-  const balance = movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${balance}€`;
+const calcDisplayBalance = function (acc) {
+  acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${acc.balance}€`;
   // (202)
   // label: all the things where we simply want to put some text 📝
 };
@@ -487,10 +487,22 @@ btnLogin.addEventListener('click', function (e) {
     // This method(function) expects a movement argument(as we hovered this function name, VS Code shows it to us).
 
     // 🔖 Display balance
-    calcDisplayBalance(currentAccount.movements);
+    calcDisplayBalance(currentAccount);
 
     // 🔖 Display summary
     calcDisplaySummary(currentAccount);
   }
 });
 // hitting enter === clikcing
+
+// <160. Implementing Transfers>
+btnTransfer.addEventListener('click', function (e) {
+  e.preventDefault(); // because this one is also a form, and so without this, if we clicked here, then that will reload the page
+  const amount = Number(inputTransferAmount.value);
+  const receiverAcc = accounts.find(
+    acc => acc.username === inputTransferTo.value
+  );
+  console.log(amount, receiverAcc);
+
+  if (amount > 0 && amount > )
+});
