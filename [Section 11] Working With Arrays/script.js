@@ -504,5 +504,14 @@ btnTransfer.addEventListener('click', function (e) {
   );
   console.log(amount, receiverAcc);
 
-  if (amount > 0 && amount > )
+  if (
+    amount > 0 &&
+    receiverAcc &&
+    currentAccount.balance >= amount &&
+    receiverAcc.username !== currentAccount.username
+  ) {
+    // Doing the transfer
+    currentAccount.movements.push(-amount);
+    receiverAcc.movements.push(amount);
+  }
 });
