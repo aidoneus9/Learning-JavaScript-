@@ -448,6 +448,9 @@ console.log(account);
 // usually the goal of the find method is to just find exactlyl one element, and therefore we usually set up a condition where only one element can satisfy that condition(that's why we used the equal operator)
 
 // ✏️ for of loop
+for (const acc of accounts) {
+  if (acc.owner === 'Jessica Davis') console.log(account);
+}
 
 // <159. Implementing Login>
 
