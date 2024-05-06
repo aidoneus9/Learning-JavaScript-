@@ -329,7 +329,18 @@ const createUsernames = function (accs) {
 };
 // in this function, we do not return anything, because what we're doing here is to produce a side effect. So we are doing something to this account object here(324), and so there is no need to return anything.
 createUsernames(accounts);
-console.log(accounts);
+
+const updateUI = function (acc) {
+  // 🔖 Display movements
+  displayMovements(acc.movements);
+  // This method(function) expects a movement argument(as we hovered this function name, VS Code shows it to us).
+
+  // 🔖 Display balance
+  calcDisplayBalance(acc);
+
+  // 🔖 Display summary
+  calcDisplaySummary(acc);
+};
 
 // <153. The filter Method>
 const deposits = movements.filter(function (mov) {
@@ -374,6 +385,9 @@ const calcDisplayBalance = function (acc) {
   // (202)
   // label: all the things where we simply want to put some text 📝
 };
+
+// 🤔 Why we can set, this property here on this account object that we receive, and it will then set that right here on these objects that we have here?
+// 👉 the reason is that all of these references do actually point to the exact same objects in the memory heap. So when we access this account, one object here, so down in the login function, where we create this currentAccount variable, this is of course, not really a copy of the object itself. This is simply another variable which points to the same, so to the original object in the memory heap. So this currentAccount object is exactly one of these objects that we have right here. So one of the objects of the account array. They are the exact same object. They simply have different name. Here it is called account1, but then down here it might be called the currentAccount. Then we use that currentAccount to pass it into this calcDisplayBalance function, and so then inside of that function, it will have even another name. So here it will be called acc, but it's still the same object. It's still pointing to the same place in the heap, so in the memory. Therefore, setting the balance property here on acc(acc.balance), is exactly the same as setting it up there where we first defined the objects.
 
 const calcDisplaySummary = function (acc) {
   const incomes = acc.movements
@@ -448,9 +462,6 @@ console.log(account);
 // usually the goal of the find method is to just find exactlyl one element, and therefore we usually set up a condition where only one element can satisfy that condition(that's why we used the equal operator)
 
 // ✏️ for of loop
-for (const acc of accounts) {
-  if (acc.owner === 'Jessica Davis') console.log(account);
-}
 
 // <159. Implementing Login>
 
@@ -485,15 +496,8 @@ btnLogin.addEventListener('click', function (e) {
     // because the assignment operator works from right to left, inputLoginPin will become the empty string. Then empty string will also be assigned to inputLoginUsername.
     inputLoginPin.blur(); // input fields lose their focus
 
-    // 🔖 Display movements
-    displayMovements(currentAccount.movements);
-    // This method(function) expects a movement argument(as we hovered this function name, VS Code shows it to us).
-
-    // 🔖 Display balance
-    calcDisplayBalance(currentAccount);
-
-    // 🔖 Display summary
-    calcDisplaySummary(currentAccount);
+    // 🔖 Update UI
+    updateUI(currentAccount);
   }
 });
 // hitting enter === clikcing
@@ -505,16 +509,52 @@ btnTransfer.addEventListener('click', function (e) {
   const receiverAcc = accounts.find(
     acc => acc.username === inputTransferTo.value
   );
-  console.log(amount, receiverAcc);
+  inputTransferAmount.value = inputTransferTo.value = '';
 
   if (
     amount > 0 &&
     receiverAcc &&
     currentAccount.balance >= amount &&
-    receiverAcc.username !== currentAccount.username
+    receiverAcc?.username !== currentAccount.username
   ) {
     // Doing the transfer
     currentAccount.movements.push(-amount);
     receiverAcc.movements.push(amount);
+
+    // Update UI
+    updateUI(currentAccount);
   }
 });
+
+// <161. The findIndex Method>
+// findIndex returns the index of the found element and not the element itself.
+
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  if (
+    inputCloseUsername.value === currentAccount.username &&
+    Number(inputClosePin.value) === currentAccount.pin
+  ) {
+    const index = accounts.findIndex(
+      acc => acc.username === currentAccount.username
+    );
+    console.log(index);
+    // .indexOf(23): only search for a value that is in the array.
+    // findIndex(): we can create a complex condition, and it can be anything that returns true or false.
+
+    // Delete account
+    accounts.splice(index, 1);
+
+    // Hide UI
+    containerApp.style.opacity = 0;
+  }
+
+  inputCloseUsername.value = inputClosePin.value = '';
+});
+
+// ✍️
+// 1. Both the find and findIndex methods get access to also the current index and the current entire array. So as always, besides the current element, these other two values are also available. But in practice, I never found these useful.
+// 2. Both the find and findIndex methods were added to JavaScript in ES6. And so they will not work in like super old browsers.
+
+// <162. some and every>
