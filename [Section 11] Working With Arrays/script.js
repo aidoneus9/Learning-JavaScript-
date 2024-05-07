@@ -636,3 +636,37 @@ const overallBalance2 = accounts
   .reduce((acc, mov) => acc + mov, 0);
 console.log(overallBalance2); // 17840
 // ⚠️ flatMap ONLY GOES ONE LEVEL DEEP and we cannot change it
+
+// <164. Sorting Arrays>
+// 🔤
+// 🅰️🅱️ Strings
+const owners = ['Zeus', 'Hera', 'Hades', 'Eros'];
+console.log(owners.sort()); // ['Eros', 'Hades', 'Hera', 'Zeus']
+console.log(owners); // ['Eros', 'Hades', 'Hera', 'Zeus'] <- ⚠️ MUTATED
+
+// 1️⃣2️⃣3️⃣ Numbers
+console.log(movements);
+console.log(movements.sort()); // [-130, -400, -650, 1300, 200, 3000, 450, 70] <- the result is not what we are expecting; the sort method does the sorting based on strings(1, 2, 3, ...)
+
+// return < 0, A, B (keep order)
+// return > 0, B, A (switch order)
+
+// 1️⃣2️⃣3️⃣ Ascending
+// movements.sort((a, b) => {
+//   if (a > b) return 1; // the number here doesn't really matter as long as it's greater than 0.
+//   if (a < b) return -1;
+// });
+movements.sort((a, b) => a - b);
+console.log(movements); // [-650, -400, -130, 70, 200, 450, 1300, 3000]
+
+// 3️⃣2️⃣1️⃣ Descending
+// movements.sort((a, b) => {
+//   if (a > b) return -1;
+//   if (a < b) return 1;
+// });
+movements.sort((a, b) => b - a);
+console.log(movements); // [3000, 1300, 450, 200, 70, -130, -400, -650]
+
+// ✏️ strings
+
+// ✍️ if you have a mixed array(strings and numbers), this is not gonna work
