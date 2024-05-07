@@ -558,3 +558,81 @@ btnClose.addEventListener('click', function (e) {
 // 2. Both the find and findIndex methods were added to JavaScript in ES6. And so they will not work in like super old browsers.
 
 // <162. some and every>
+console.log(movements);
+
+// INCLUDES: EQUALITY
+console.log(movements.includes(-130));
+
+// SOME: CONDITION
+// same with...
+console.log(movements.some(mov => mov === -130));
+
+const anyDeposits = movements.some(mov => mov > 5000);
+console.log(anyDeposits);
+
+// (528)
+// it only grants a loan if there is at least one deposit with at least 10% of the requested loan amount
+
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  const amount = Number(inputLoanAmount.value);
+
+  if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
+    // Add movement
+    currentAccount.movements.push(amount);
+
+    // Update UI
+    updateUI(currentAccount);
+
+    // Clear input fields
+    inputLoanAmount.value = '';
+  }
+});
+
+// EVERY
+console.log(movements.every(mov => mov > 0)); // false
+console.log(account4.movements.every(mov => mov > 0)); // true
+
+// DRY PRINCIPLE: Separate callback
+const deposit = mov => mov > 0;
+console.log(movements.some(deposit));
+console.log(movements.every(deposit));
+console.log(movements.filter(deposit));
+
+// <163. flat and flatMap>
+
+//  🪜↘️🪜↘️ flat
+// const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
+// console.log(arr.flat()); // [1, 2, 3, 4, 5, 6, 7, 8]
+
+const arrDeep = [[[1, 2], 3], [4, [5, 6]], 7, 8];
+console.log(arrDeep.flat()); // [Array(2), 3, 4, Array(2), 7, 8] -> the flat method only goes one level deep when flattening the array
+console.log(arrDeep.flat(1)); // [Array(2), 3, 4, Array(2), 7, 8]
+console.log(arrDeep.flat(2)); // [1, 2, 3, 4, 5, 6, 7, 8]
+
+// ❓ The bank itself wants to calculate the overall balance of all the movements of all the accounts.
+// -> 1. we have all these movements stored in arrays
+// -> 2. these arrays are inside the objects in the accounts array
+
+const accountMovements = accounts.map(acc => acc.movements);
+console.log(accountMovements); // [Array(8), Array(8), Array(8), Array(5)]
+const allMovements = accountMovements.flat();
+console.log(allMovements); // (29)
+// const overallBalance = allMovements.reduce((acc, mov) => acc + mov, 0);
+// console.log(overallBalance); // 17840
+
+// ⛓️ Chaining methods
+const overallBalance = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(overallBalance); // 17840
+// -> using a map first, and then flattening the result is a pretty common operation
+
+// flatMap
+const overallBalance2 = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(overallBalance2); // 17840
+// ⚠️ flatMap ONLY GOES ONE LEVEL DEEP and we cannot change it
