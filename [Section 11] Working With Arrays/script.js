@@ -223,13 +223,16 @@ const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
 // ✍️ Now we could simply start writing our code out here in the global context. However,that is not a good practice. So whenever we do something like this, it's always best to create a function.
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
   containerMovements.innerHTML = '';
   // The first thing is to essentially empty the entire container, and only then we start adding new elements.
   // ⚠️ textContent simply returns the text itself, while HTML returns everything, including the HTML. So all the HTML tags will be included.
   // .textContent = 0
 
-  movements.forEach(function (mov, i) {
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+  // ⚠️ create a COPY: using the SLICE method and not the spread operator; here we are in the middle of a chain.
+
+  movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
     const html = `
@@ -670,3 +673,14 @@ console.log(movements); // [3000, 1300, 450, 200, 70, -130, -400, -650]
 // ✏️ strings
 
 // ✍️ if you have a mixed array(strings and numbers), this is not gonna work
+
+// (226)
+let sorted = false;
+
+btnSort.addEventListener('click', function (e) {
+  e.preventDefault();
+  displayMovements(currentAccount.movements, !sorted);
+  sorted = !sorted;
+});
+
+// <165. More Ways of Creating and Filling Arrays>
