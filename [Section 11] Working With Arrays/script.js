@@ -684,3 +684,97 @@ btnSort.addEventListener('click', function (e) {
 });
 
 // <165. More Ways of Creating and Filling Arrays>
+
+// Manually create an array
+const a = [1, 2, 3, 4, 5, 6, 7];
+console.log(new Array(1, 2, 3, 4, 5, 6, 7));
+
+// Programmatically create an array
+// Empty arrays + fill method
+const x = new Array(7);
+console.log(x); // [비어 있음 × 7]; whenever we only pass in one argument, then it creates a new empty argument with that length
+
+// ⚠️ we cannot really use this x array for anything. For example, we cannot call the map() method on it to now fill it up
+console.log(x.map(() => 5)); // [비어 있음 × 7]
+
+// 👉 There is one method that we can call on this empty array: the fill() method
+
+// x.fill(1); // MUTATE: [1, 1, 1, 1, 1, 1, 1]
+// x.fill(1, 3); // specify a begin parameter: [비어 있음 × 3, 1, 1, 1, 1]
+x.fill(1, 3, 5); // the final index is not included: [비어 있음 × 3, 1, 1, 비어 있음 × 2]
+console.log(x);
+
+a.fill(23, 4, 6);
+console.log(a); // [1, 2, 3, 4, 23, 23, 7]
+
+// Array.from
+// Array.from(); // Array here is a function and then on this function object, we call the from() method -> first pass in an object with the length property, then the second argument is a mapping function
+const y = Array.from({ length: 7 }, () => 1);
+console.log(y); // [1, 1, 1, 1, 1, 1, 1]
+
+// const z = Array.from({ length: 7 }, (cur, i) => i + 1);
+const z = Array.from({ length: 7 }, (_, i) => i + 1); // _: a throwaway variable; we do not need this(715) current value at all
+console.log(z); // [1, 2, 3, 4, 5, 6, 7]
+
+// ✏️ try Array.from() to generate an array with 100 random dice rolls
+
+// Iterables(array-like structure: strings, maps or sets) can be converted to real arrays using Array.from()
+// + the result of using querySelectorAll(): returns NodeList, something like an array which contains all the selected elements -> it doesn't have most of the array methods(ex. map(), reduce()) -> need to convert the NodeList to an array
+
+// 🤔 let's pretend that all of the movements only stored in the user interface. But we do not have them somewhere in our code. So we don't have an array containing these values.
+// -> But now, let's say we want to calculate their sum. And so therefore we need to somehow get them first from the user interface and then do the calculation based on that.
+
+labelBalance.addEventListener('click', function () {
+  const movementsUI = Array.from(
+    document.querySelectorAll('.movements__value'),
+    el => Number(el.textContent.replace('€', ''))
+  );
+
+  // console.log(movementsUI); // (8) [div.movements__value, div.movements__value, div.movements__value, div.movements__value, div.movements__value, div.movements__value, div.movements__value, div.movements__value]
+  // console.log(movementsUI.map(el => Number(el.textContent.replace('€', '')))); // we can use now the second argument of the Array.from() a function here(728), which remember the mapping callback
+
+  console.log(movementsUI);
+
+  // Another way
+  const movementsUI2 = [...document.querySelectorAll('.movements__value')];
+});
+
+// 📝 Recap
+// We used a Array.from() to create an array from the result of the querySelectorAll() which is a NodeList, which is not really an array, but an array-like structure.
+// -> That array-like structure can easily be converted to an array using Array.from().
+// -> As a second step, we even included a mapping function, which then transforms that initial array to an array exactly as we want it. So basically converting the raw element to its text content and replacing the Euro sign with nothing.
+// -> In the end, we end up exactly with the array of numbers that we intended.
+
+// <166. Summary: Which Array Method to Use?>
+
+// <167. Array Methods Practice>
+
+// 1.
+// const bankDepositSum = accounts.map(acc => acc.movements).flat()
+const bankDepositSum = accounts
+  .flatMap(acc => acc.movements)
+  .filter(mov => mov > 0)
+  .reduce((sum, cur) => sum + cur, 0);
+
+console.log(bankDepositSum); // 25180
+
+// 2.
+// const numDeposits1000 = accounts
+//   .flatMap(acc => acc.movements)
+//   .filter(mov => mov >= 1000).length;
+
+const numDeposits1000 = accounts
+  .flatMap(acc => acc.movements)
+  // .reduce((count, cur) => (cur >= 1000 ? count + 1 : count), 0); // ⛄ 0(accumulator): use this to reduce the array down to anything that we want.
+  .reduce((count, cur) => (cur >= 1000 ? ++count : count), 0); // 6 (774)
+//  .reduce((count, cur) => (cur >= 1000 ? count++ : count), 0); // 0 (774)
+
+console.log(numDeposits1000); // 6
+
+// ⚠️ count++ (x)
+let b = 10;
+// console.log(b++); // 10
+
+// 💡 -> Prefixed ++ operator
+console.log(++b); // 11
+console.log(b); // 11
