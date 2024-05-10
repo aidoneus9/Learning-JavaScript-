@@ -357,8 +357,8 @@ const depositsFor = [];
 for (const mov of movements) if (mov > 0) depositsFor.push(mov);
 console.log(depositsFor);
 
-const withdrawls = movements.filter(mov => mov < 0);
-console.log(withdrawls);
+const withdrawals = movements.filter(mov => mov < 0);
+console.log(withdrawals);
 
 // <154. The reduce Method>
 console.log(movements);
@@ -778,3 +778,36 @@ let b = 10;
 // 💡 -> Prefixed ++ operator
 console.log(++b); // 11
 console.log(b); // 11
+
+// 3
+// create an OBJECT which contains the sum of the deposits and of the withdrawals
+
+/*
+const sums = accounts
+  .flatMap(acc => acc.movements)
+  .reduce(
+    (sums, cur) => {
+      cur > 0 ? (sums.deposits += cur) : (sums.withdrawals += cur);
+      return sums; // ✍️ remember that in an arrow function, the value is only automatically, so implicitly returned when we don't have a function body with curly braces {}. But right now, we do here. Therefore, we have to explicitly, so to manually return the accumulator from the function. So that's how the reduce method works. We always have to return the accumulator from each iteration.
+    },
+    { deposits: 0, withdrawals: 0 } // ⛄ initial value of the accumulator: empty object or (786)
+  );
+
+console.log(sums); // {deposits: 25180, withdrawals: -7340}
+*/
+
+// 🧱 Distructure the object
+const { deposits, withdrawals } = accounts
+  .flatMap(acc => acc.movements)
+  .reduce(
+    (sums, cur) => {
+      // cur > 0 ? (sums.deposits += cur) : (sums.withdrawals += cur);
+      sums[cur > 0 ? 'deposits' : 'withdrawals'] += cur;
+      return sums;
+    },
+    { deposits: 0, withdrawals: 0 }
+  );
+
+console.log(deposits, withdrawals); // 25180 -7340
+
+// ✏️ Do this with arrays: recreate any of the examples with map, filter and reduce to use only the reduce method
