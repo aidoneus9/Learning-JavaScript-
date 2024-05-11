@@ -794,7 +794,6 @@ const sums = accounts
   );
 
 console.log(sums); // {deposits: 25180, withdrawals: -7340}
-*/
 
 // 🧱 Distructure the object
 const { deposits, withdrawals } = accounts
@@ -809,5 +808,29 @@ const { deposits, withdrawals } = accounts
   );
 
 console.log(deposits, withdrawals); // 25180 -7340
+*/
 
 // ✏️ Do this with arrays: recreate any of the examples with map, filter and reduce to use only the reduce method
+
+// 4.
+// create a simple function to convert any string to a title case
+// title case: all the words in a sentence are capitalized except for some of them
+// this is a nice title -> This Is a Nice Title
+const convertTitleCase = function (title) {
+  const capitalize = str => str[0].toUpperCase() + str.slice(1);
+
+  const exceptions = ['a', 'an', 'and', 'the', 'but', 'or', 'on', 'in', 'with'];
+
+  const titleCase = title
+    .toLowerCase()
+    .split(' ')
+    .map(word => (exceptions.includes(word) ? word : capitalize(word)))
+    // exceptions.includes(word) ? word : word[0].toUpperCase() + word.slice(1)
+    .join(' ');
+
+  return capitalize(titleCase);
+};
+
+console.log(convertTitleCase('this is a nice title'));
+console.log(convertTitleCase('this is a LONG title but not too long'));
+console.log(convertTitleCase('and here is another title with an EXAMPLE'));
