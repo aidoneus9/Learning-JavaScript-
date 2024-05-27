@@ -142,7 +142,7 @@ const dogs = [
 ];
 
 // 1.
-dogs.forEach(dog => (dog.recFood = Math.trunc(dog.weight ** 0.75 * 28))); // ✂️ Math.trunc: cut the decimal parts
+dogs.forEach(dog => (dog.recFood = Math.trunc(dog.weight ** 0.75 * 28))); // ✂️ Math.trunc(): get rid of the decimal part
 console.log(dogs);
 
 // 2.
@@ -155,7 +155,41 @@ console.log(
 );
 
 // 3.
-const onwersEatTooMuch = dogs
-  .filter(dog => dog.curFood > dog)
-  .map(dog => dog.owners);
+const ownersEatTooMuch = dogs
+  .filter(dog => dog.curFood > dog.recFood)
+  // .map(dog => dog.owners)
+  // .flat()
+  .flatMap(dog => dog.owners);
 console.log(ownersEatTooMuch);
+
+const ownersEatTooLittle = dogs
+  .filter(dog => dog.curFood < dog.recFood)
+  .flatMap(dog => dog.owners);
+console.log(ownersEatTooLittle);
+
+// 4.
+console.log(`${ownersEatTooMuch.join(' and ')}'s dogs eat too much!`);
+console.log(`${ownersEatTooLittle.join(' and ')}'s dogs eat too little!`);
+
+// 5.
+console.log(dogs.some(dog => dog.curFood === dog.recFood)); // false
+
+// 6.
+// console.log(
+//   dogs.some(
+//     dog => dog.curFood > dog.recFood * 0.9 && dog.curFood < dog.recFood * 1.1
+//   )
+// );
+
+const checkEatingOkay = dog =>
+  dog.curFood > dog.recFood * 0.9 && dog.curFood < dog.recFood * 1.1;
+
+console.log(dogs.some(checkEatingOkay)); // true
+
+// 7.
+console.log(dogs.filter(checkEatingOkay));
+
+// 8. Create a shallow copy of the dogs array and sort it by recommended food portion in an ascending order (keep in mind that the portions are inside the array's objects)
+const dogsSorted = dogs.slice().sort((a, b) => a.recFood - b.recFood);
+// ✍️ Now we have the numbers in objects, and so a and b are now the objects. However, the values that we want to subtract are in these objects and we can simply get them out of there(a.recFood, b.recFood).
+console.log(dogsSorted);
