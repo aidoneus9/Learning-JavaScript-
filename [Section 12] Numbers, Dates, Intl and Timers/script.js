@@ -395,3 +395,74 @@ labelBalance.addEventListener('click', function () {
   });
 });
 // Nth
+
+// <174. Numeric Separators>
+
+// 287,460,000,000
+const diameter = 287_460_000_000;
+console.log(diameter); // 287460000000
+
+const price = 345_99;
+console.log(price); // 34599
+
+const transferFee1 = 15_00;
+const transferFee2 = 1_500;
+// -> Both of them are exactly 1,500. But just the underscore alone, gives them different meanings. So we can use that to our advantage, whenever we write numbers in or JavaScript code.
+
+// ⚠️ we can only place underscores between numbers
+// const PI = 3._1415;
+// console.log(PI); // Uncaught SyntaxError
+
+// ⚠️ when we try to convert strings, that contain underscores, to a number, that will not work as expected
+console.log(Number('230000')); // 230000
+console.log(Number('230_000')); // NaN
+console.log(parseInt('230_000')); // 230
+
+// <175. Working with BigInt>
+// Of 64 bits, only 53 are used to actually store the digits themselves. The rest are for storing the position of the decimal point and the sign.
+console.log(2 ** 53 - 1); // 9007199254740991
+console.log(Number.MAX_SAFE_INTEGER); // 9007199254740991
+console.log(2 ** 53 + 1); // 9007199254740992
+console.log(2 ** 53 + 2); // 9007199254740994
+console.log(2 ** 53 + 3); // 9007199254740996
+console.log(2 ** 53 + 4); // 9007199254740996
+// -> in some numbers it does actually work for some reason, but that's because JavaScript behind the scenes uses some trick to still represent some of the unsafe numbers
+
+// 👉 this can be a problem sometimes because in some situations we might need really, really big numbers, way bigger than that: for database IDs, when interacting with real 60 bit numbers.
+// -> 📌 BigInt(ES2020)
+// 1)
+console.log(4838430248342043823408394839483204n); // 4838430248342043823408394839483204n
+// n: transforms a regular number into a BigInt number
+
+// 2)
+console.log(BigInt(4838430248342043823408394839483204)); // 4838430248342043683707135006343168n
+// -> this constructor function should probably only be used with small numbers
+console.log(BigInt(48384302)); // 48384302n
+
+// 📌 Operations
+console.log(10000n + 10000n); // 20000n
+console.log(4838430248342043823408394839483204n + 10000000n); // 4838430248342043823408394849483204n
+// console.log(Math.sqrt(16n)); // ⚠️
+
+// -> ⚠️ what is not possible is to mix BigInt with regular numbers
+const huge = 4838430248342043823408394849483204n;
+const num = 23;
+// console.log(huge * num); // Uncaught TypeError: Cannot mix BigInt and other types, use explicit conversions
+console.log(huge * BigInt(num)); // 111283895711867007938393081538113692ne
+
+// -> ⚠️ Exceptions; there are two exceptions to this which are the comparison operators and the plus operator when working with strings
+console.log(20n > 15); // true
+console.log(20n === 20); // false; JavaScript when we use the triple operator, does not do type coercion. These two values here, they have a different primitive type. 20 is a regular number, and 20n is a BigInt.
+console.log(typeof 20n); // bigint
+console.log(20n == 20); // true; if we do the regular equality operator, JavaScript does the type coercion.
+console.log(20n == '20'); // true
+
+// string concatinations
+console.log(huge + ' is REALLY big!!!'); // 4838430248342043823408394849483204 is REALLY big!!!: the number is actually converted to a string. So even the BigInt number.
+
+// 📌 Divisions
+console.log(10n / 3n); // 3n
+console.log(11n / 3n); // 3n; it cuts the decimal part off
+console.log(10 / 3); // 3.3333333333333335
+
+// <176. Creating Dates>
