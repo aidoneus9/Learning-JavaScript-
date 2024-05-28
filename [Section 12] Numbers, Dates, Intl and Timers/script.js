@@ -362,3 +362,36 @@ console.log((2.345).toFixed(2)); // 2.35 (string)
 console.log(+(2.345).toFixed(0)); // 2 (number)
 
 // ✍️ works in a similar way to the string methods. So this is a number(358), so it's a primitive, and primitives actually don't have methods, and so behind the scenes, JavaScript will do boxing(Boxing: transform this to a number object, then call the method on that object. And then once the operation is finished, it will convert it back to a primitive).
+
+// <173. The Remainder Operator>
+// -> returns the remainder of a divison
+
+console.log(5 % 2); // 1
+console.log(5 / 2); // 5 = 2 * 2 + 1
+
+console.log(8 % 3); // 2
+console.log(8 / 3); // 8 = 2 * 3 + 2
+
+console.log(6 % 2); // 0
+console.log(6 / 2);
+
+console.log(7 % 2); // 1
+console.log(7 / 2);
+
+// -> check whether a certain number is even or not
+const isEven = n => n % 2 === 0;
+console.log(isEven(8)); // true
+console.log(isEven(23)); // false
+console.log(isEven(514)); // true
+
+// -> this works to check if any number is divisible by any other number
+
+labelBalance.addEventListener('click', function () {
+  [...document.querySelectorAll('.movements__row')].forEach(function (row, i) {
+    // 0, 2, 4, 6
+    if (i % 2 === 0) row.style.backgroundColor = 'pink';
+    // 0, 3, 6, 9
+    if (i % 3 === 0) row.style.backgroundColor = 'purple';
+  });
+});
+// Nth
