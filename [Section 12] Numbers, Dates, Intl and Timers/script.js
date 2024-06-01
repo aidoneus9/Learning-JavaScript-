@@ -1,7 +1,8 @@
 'use strict';
 
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
+// btnSorted: acc.movements
+
+// <177. Adding Dates to "Bankist" App>
 // BANKIST APP
 
 /////////////////////////////////////////////////
@@ -81,19 +82,25 @@ const inputClosePin = document.querySelector('.form__input--pin');
 /////////////////////////////////////////////////
 // Functions
 
-const displayMovements = function (movements, sort = false) {
+const displayMovements = function (acc, sort = false) {
   containerMovements.innerHTML = '';
 
-  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+  const movs = sort
+    ? acc.movements.slice().sort((a, b) => a - b)
+    : acc.movements;
 
   movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
+    const date = new Date(acc.movementsDates[i]);
+    // ✍️ looping over two arrays at the same time; we called forEach method on one of them(92, movs), and then we use the current index to also get the data from some other array; that's gonna be at the same position because we're using the same index
+    // ✍️ we can use that string to create a new date object and we need that object, so that then from there, we can call our usual methods to get the date and the month and the year; that's the reason why we need to convert these strings back into a JavaScript object, because only then, we can actually work with that data
 
     const html = `
       <div class="movements__row">
         <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div>
+        <div class="movements__date">${displayDate}</div>
         <div class="movements__value">${mov.toFixed(2)}€</div>
       </div>
     `;
@@ -142,7 +149,7 @@ createUsernames(accounts);
 
 const updateUI = function (acc) {
   // Display movements
-  displayMovements(acc.movements);
+  displayMovements(acc);
 
   // Display balance
   calcDisplayBalance(acc);
@@ -154,6 +161,22 @@ const updateUI = function (acc) {
 ///////////////////////////////////////
 // Event handlers
 let currentAccount;
+
+// FAKE ALWAYS LOGGED IN
+currentAccount = account1;
+updateUI(currentAccount);
+containerApp.style.opacity = 100;
+
+const now = new Date();
+const day = `${now.getDate()}`.padStart(2, 0); // As of 01/06/2024, 18:31
+const month = `${now.getMonth() + 1}`.padStart(2, 0); // ∵ zero-based // As of 01/06/2024, 18:31
+const year = now.getFullYear();
+const hour = now.getHours();
+const min = now.getMinutes();
+// labelDate.textContent = now; // As of Sat Jun 01 2024 18:24:03 GMT+0900 (한국 표준시)
+labelDate.textContent = `${day}/${month}/${year}, ${hour}:${min}`; // As of 2/5/2024, 18:28
+
+// day/month/year
 
 btnLogin.addEventListener('click', function (e) {
   // Prevent form from submitting
@@ -244,12 +267,12 @@ btnClose.addEventListener('click', function (e) {
 let sorted = false;
 btnSort.addEventListener('click', function (e) {
   e.preventDefault();
-  displayMovements(currentAccount.movements, !sorted);
+  displayMovements(currentAccount, !sorted);
   sorted = !sorted;
 });
 
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
+//////////////////////////////////////////////
+/*
 // LECTURES
 // <171. Converting and Checking Numbers>
 // In JavaScript, all numbers are presented internally as floating point numbers. So basically, always as decimals.
@@ -466,3 +489,52 @@ console.log(11n / 3n); // 3n; it cuts the decimal part off
 console.log(10 / 3); // 3.3333333333333335
 
 // <176. Creating Dates>
+// Create a date
+const now = new Date();
+console.log(now); // Thu May 30 2024 14:16:05 GMT+0900 (한국 표준시)
+
+console.log(new Date('Thu May 30 2024 14:14:34')); // Thu May 30 2024 14:14:34 GMT+0900 (한국 표준시)
+// -> simply giving JavaScript a string here and it will then automatically parse the time based on that
+console.log(new Date('Decembre 24, 2015')); // Thu Dec 24 2015 00:00:00 GMT+0900 (한국 표준시)
+// -> not a good idea to this because it can be quite unreliable
+console.log(new Date(account1.movementsDates[0])); // Tue Nov 19 2019 06:31:17 GMT+0900 (한국 표준시)
+// -> this is okay because it was JavaScript who created that date
+
+console.log(new Date(2037, 10, 19, 15, 23, 5)); // Thu Nov 19 2037 15:23:05 GMT+0900 (한국 표준시)
+// -> ⚠️ here we have 10, but November is actually the month 11. So that means that the month here in JavaScript is zero-based.
+console.log(new Date(2037, 10, 33)); // Thu Dec 03 2037 00:00:00 GMT+0900 (한국 표준시)
+// -> autocorrect right to the next day
+
+console.log(new Date(0)); // Thu Jan 01 1970 09:00:00 GMT+0900 (한국 표준시)
+// -> the amount of milliseconds passed since the beginning of the Unix time, which is January 1, 1970
+// -> if we pass in zero: zero milliseconds after that initial Unix time
+// -> 3 days after this:
+console.log(new Date(3 * 24 * 60 * 60 * 1000)); // Sun Jan 04 1970 09:00:00 GMT+0900 (한국 표준시)
+// -> convert from days to milliseconds
+// ✍️ 3 * 24 * 60 * 60 * 1000 = 259200000: timestamp of the day number 3
+
+// ✍️ just another special type of object; they have their own methods
+// -> we can use these methods to get, or to set components of a date
+
+// Working with dates
+const future = new Date(2037, 10, 19, 15, 23);
+console.log(future);
+console.log(future.getFullYear()); // 2037
+console.log(future.getMonth()); // 10: zero-based
+console.log(future.getDate()); // 19
+console.log(future.getDay()); // 4
+// ⚠️ getDay() is actually not the day of the month, but the day of the week(zero is Sunday)
+console.log(future.getHours()); // 15
+console.log(future.getMinutes()); // 23
+console.log(future.getSeconds()); // 0
+console.log(future.toISOString()); // 2037-11-19T06:23:00.000Z: this is the ISO string, which follows some kind of international standard
+console.log(future.getTime()); // 2142224580000: this huge amount has passed since January 1, 1970
+// -> now we can take this number and reverse this:
+console.log(new Date(2142224580000)); // Thu Nov 19 2037 15:23:00 GMT+0900 (한국 표준시)
+// -> timestamps are actually so important that there is a special method that we can use to get the timestamp for right now; if you want simply the curretn timestamp for this exact moment
+console.log(Date.now()); // 1717047967973
+
+// There are also the set versions of all of these methods
+future.setFullYear(2040);
+console.log(future); // Mon Nov 19 2040 15:23:00 GMT+0900 (한국 표준시)
+*/
