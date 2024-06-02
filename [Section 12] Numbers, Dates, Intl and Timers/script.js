@@ -94,6 +94,10 @@ const displayMovements = function (acc, sort = false) {
     const date = new Date(acc.movementsDates[i]);
     // ✍️ looping over two arrays at the same time; we called forEach method on one of them(92, movs), and then we use the current index to also get the data from some other array; that's gonna be at the same position because we're using the same index
     // ✍️ we can use that string to create a new date object and we need that object, so that then from there, we can call our usual methods to get the date and the month and the year; that's the reason why we need to convert these strings back into a JavaScript object, because only then, we can actually work with that data
+    const day = `${date.getDate()}`.padStart(2, 0);
+    const month = `${date.getMonth() + 1}`.padStart(2, 0);
+    const year = date.getFullYear();
+    const displayDate = `${day}/${month}/${year}`;
 
     const html = `
       <div class="movements__row">
@@ -167,16 +171,18 @@ currentAccount = account1;
 updateUI(currentAccount);
 containerApp.style.opacity = 100;
 
+/*
 const now = new Date();
 const day = `${now.getDate()}`.padStart(2, 0); // As of 01/06/2024, 18:31
 const month = `${now.getMonth() + 1}`.padStart(2, 0); // ∵ zero-based // As of 01/06/2024, 18:31
 const year = now.getFullYear();
-const hour = now.getHours();
-const min = now.getMinutes();
+const hour = `${now.getHours()}`.padStart(2, 0);
+const min = `${now.getMinutes()}`.padStart(2, 0);
 // labelDate.textContent = now; // As of Sat Jun 01 2024 18:24:03 GMT+0900 (한국 표준시)
 labelDate.textContent = `${day}/${month}/${year}, ${hour}:${min}`; // As of 2/5/2024, 18:28
 
 // day/month/year
+*/
 
 btnLogin.addEventListener('click', function (e) {
   // Prevent form from submitting
@@ -193,6 +199,15 @@ btnLogin.addEventListener('click', function (e) {
       currentAccount.owner.split(' ')[0]
     }`;
     containerApp.style.opacity = 100;
+
+    // Create current date and time
+    const now = new Date();
+    const day = `${now.getDate()}`.padStart(2, 0);
+    const month = `${now.getMonth() + 1}`.padStart(2, 0);
+    const year = now.getFullYear();
+    const hour = `${now.getHours()}`.padStart(2, 0);
+    const min = `${now.getMinutes()}`.padStart(2, 0);
+    labelDate.textContent = `${day}/${month}/${year}, ${hour}:${min}`;
 
     // Clear input fields
     inputLoginUsername.value = inputLoginPin.value = '';
@@ -221,6 +236,10 @@ btnTransfer.addEventListener('click', function (e) {
     currentAccount.movements.push(-amount);
     receiverAcc.movements.push(amount);
 
+    // Add transfer date
+    currentAccount.movementsDates.push(new Date().toISOString());
+    receiverAcc.movementsDates.push(new Date().toISOString());
+
     // Update UI
     updateUI(currentAccount);
   }
@@ -234,6 +253,9 @@ btnLoan.addEventListener('click', function (e) {
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
     // Add movement
     currentAccount.movements.push(amount);
+
+    // Add loan date
+    currentAccount.movementsDates.push(new Date().toISOString());
 
     // Update UI
     updateUI(currentAccount);
@@ -538,3 +560,22 @@ console.log(Date.now()); // 1717047967973
 future.setFullYear(2040);
 console.log(future); // Mon Nov 19 2040 15:23:00 GMT+0900 (한국 표준시)
 */
+
+// <178. Operations With Dates>
+const future = new Date(2037, 10, 19, 15, 23);
+console.log(Number(future)); // 2142224580000
+console.log(Number(+future)); // 2142224580000
+
+const calcDaysPassed = (date1, date2) =>
+  Math.abs(date2 - date1) / (1000 * 60 * 60 * 24); // 10 (days): milliseconds -> seconds -> minutes -> days
+
+// const days1 = calcDaysPassed(new Date(2037, 3, 4), new Date(2037, 3, 14));
+// ✍️ if you need really precise calculations, e.g., including time changes due to daylight saving changes, and other weird edge cases like that, then you should use a date library like moment.js
+
+// const days1 = calcDaysPassed(new Date(2037, 3, 4), new Date(2037, 3, 14, 10, 8)); // 10.422222222222222 -> simply use Math.round()
+
+const days1 = calcDaysPassed(
+  new Date(2037, 3, 4),
+  new Date(2037, 3, 14, 10, 8)
+); // 10.422222222222222 -> simply use Math.round()
+console.log(days1);
