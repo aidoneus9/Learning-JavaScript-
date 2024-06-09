@@ -23,8 +23,9 @@ const closeModal = function () {
 
 btnsOpenModal.forEach(btn => btn.addEventListener('click', openModal));
 
-for (let i = 0; i < btnsOpenModal.length; i++)
-  btnsOpenModal[i].addEventListener('click', openModal);
+// for (let i = 0; i < btnsOpenModal.length; i++)
+//   btnsOpenModal[i].addEventListener('click', openModal);
+// ✍️ btnsOpenModal: Nodelist; because it's the result of querySelectorAll. A NodeList is not an array, but still it does have default forEach method.
 
 btnCloseModal.addEventListener('click', closeModal);
 overlay.addEventListener('click', closeModal);
@@ -34,3 +35,13 @@ document.addEventListener('keydown', function (e) {
     closeModal();
   }
 });
+
+// <186. How the DOM Really Works>
+
+// <187. Selecting, Creating, and Deleting Elements>
+console.log(document.documentElement);
+console.log(document.head);
+console.log(document.body);
+
+document.querySelector('.header');
+document.querySelectorAll('.section');
