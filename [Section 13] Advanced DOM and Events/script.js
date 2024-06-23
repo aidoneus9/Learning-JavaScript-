@@ -39,9 +39,60 @@ document.addEventListener('keydown', function (e) {
 // <186. How the DOM Really Works>
 
 // <187. Selecting, Creating, and Deleting Elements>
+// 📌 Selecting elements
 console.log(document.documentElement);
+// -> just document here is not enough to select the document element; because this is not the real DOM element. So for example, if we want to apply CSS styles to the entire page we always need to select document element.
 console.log(document.head);
 console.log(document.body);
 
-document.querySelector('.header');
-document.querySelectorAll('.section');
+const header = document.querySelector('.header');
+// -> return the first element that matches this selector
+const allSection = document.querySelectorAll('.section');
+console.log(allSection);
+// -> return a nodeList, and then that will contain all of the elements that are a section, so that are slected by this selector
+
+document.getElementById('section--1');
+// -> we only pass the ID name itself without the selector; so this section here has ID section--1. That's only for the querySelector methods.
+const allButtons = document.getElementsByTagName('button');
+console.log(allButtons);
+// -> this method actually returns an HTML collection. So that's different from a node list because an HTML collection is actually a so-called life collection. And that means that if the DOM changes, then this collection is also immediately updated automatically.
+// -> The same does not happen with a nodeList; that's because this variable(allSections) was created by the time that this section still existed. And it didn't update itself as I deleted one of its elements.
+
+console.log(document.getElementsByClassName('btn'));
+
+// 📌 Creating and inserting elements
+// .insertAdjacentHTML
+
+const message = document.createElement('div');
+// -> this here creates a DOM element, and then stores that element into the message. Now that element is not yet anywhere in our DOM. All this is a DOM object that we can now use to do something on it but it is not yet in the DOM itself; so it's nowhere to be found on our webpage. If we want it on the page, then we need to manually insert it into the page.
+message.classList.add('cookie-message');
+message.textContent =
+  'We use cookies for improved functionality and analytics.';
+message.innerHTML =
+  'We use cookies for improved functionality and analytics. <button class="btn btn--close-cookie">Got it!</button';
+// ✍️ remember that we can use both of these properties(textContent & innerHTML) to read and to set content
+
+// header.prepend(message);
+// -> also really in our DOM
+// -> prepending basically adds the element as the FIRST CHILD of this element(header).
+// -> but we can also add it as the LAST CHILD: append
+header.append(message);
+// -> what we see is that the element was actually only insert at once, that's because this element(element) is now indeed a life element living in the DOM. And so therefore it cannot be at multiple places at the same time.
+// -> so what happened here is that we first prepended the element and then we appended it. And what this append did here was to basically move the element from being the first child to being the last child(basically it moved the element and didn't really insert it) because it was already inserted here by prepend.
+// -> so what this means is that we can use the prepend and append methods not only to insert elements, but also to MOVE them. That's because a DOM element is unique(it can always ONLY EXIST AT ONE PLACE AT A TIME)
+
+// 🤔 What if we actually wanted to insert multiple copies of the same element?
+// header.append(message.cloneNode(true));
+
+// header.before(message); // as a sibling
+// header.after(message); // as a sibling
+
+// 📌 Delete elements
+document
+  .querySelector('.btn--close-cookie')
+  .addEventListener('click', function () {
+    message.remove();
+    // message.parentElement.removeChild(message);
+  });
+// (94) remove(): we don't have to select the message element again because we already have it in memory. So we already have it stored in a variable; so there's no need to run a document or querySelector.
+// (95) DOM traversing
