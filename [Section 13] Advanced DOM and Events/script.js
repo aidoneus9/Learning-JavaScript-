@@ -96,3 +96,21 @@ document
   });
 // (94) remove(): we don't have to select the message element again because we already have it in memory. So we already have it stored in a variable; so there's no need to run a document or querySelector.
 // (95) DOM traversing
+
+// <188. Styles, Attributes and Classes>
+// Styles
+message.style.backgroundColor = '#37383d';
+message.style.width = '120%';
+// -> Remember that these styles are actually set as inline styles, so styles set directly in the DOM.
+
+console.log(message.style.height); // ; that's because using the style property like this here only works for inline styles that we set ourselves also using this style property. So it's gonna work for example, for the background color.
+console.log(message.style.backgroundColor); // rgb(55, 56, 61); because it is an inline style, so a style that we set manually ourselves.
+// -> but we cannot get a style that is hidden inside of a class or maybe that doesn't even exist.
+console.log(message.style.color); // ; so the color is defined in the style sheet, but if we try to log it here, then it's nowhere to be found.
+
+console.log(getComputedStyle(message).color); // rgb(187, 187, 187)
+console.log(getComputedStyle(message).height); // 85.5px
+// which means that it's the real style as it appears on the page. And even if we do not declare it in our CSS, so for example, the height, we didn't define ourselves, but the browser of course needed to calculate the height to display it and so we can then get access to that value.
+
+message.style.height =
+  Number.parseFloat(getComputedStyle(message).height, 10) + 30 + 'px';
