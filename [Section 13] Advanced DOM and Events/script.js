@@ -114,3 +114,16 @@ console.log(getComputedStyle(message).height); // 85.5px
 
 message.style.height =
   Number.parseFloat(getComputedStyle(message).height, 10) + 30 + 'px';
+
+// 📌 CSS custom properties(CSS variables)
+// -> the idea of CSS variables is very similar to the idea of variables in JavaScript, so this way we can change the value in many places all over our CSS files by simply changing the value here.
+// -> they are defined in the document root and so in JavaScript that is equivalent to the document; basically the document element
+document.documentElement.style.setProperty('--color-primary', 'orangered');
+// btw, we can do the same for all properties; we could also use setProperty() to set the color or the backgorund color, or the width, or rlly whatever we want
+
+// 📌 Attributes
+const logo = document.querySelector('.nav__logo');
+console.log(logo.alt);
+console.log(logo.src);
+// -> this works because on images they are supposed to have the alt, and the source attributes on them and so if we specify them in HTML, then JavaScript will automatically create these properties on the object
+// -> but if we add some other property that is not a standard, then JavaScript will not automatically create a property on the object
